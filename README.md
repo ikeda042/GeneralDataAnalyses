@@ -80,6 +80,10 @@ Let us consider these three vectors:
 
 $$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
 
+, and assume that the following equations are valid.
+
+$$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
+$$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
 
 
 
