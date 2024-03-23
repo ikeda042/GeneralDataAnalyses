@@ -26,3 +26,4 @@ deactivate
 ```Bash
 pip freeze > requirements.txt
 ```
+
