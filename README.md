@@ -85,6 +85,10 @@ $$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\m
 $$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
 $$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
 
+then 
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}\mathbf{v}=\sigma^2\mathbf{I}\mathbf{v}$$
+
 
 
 
