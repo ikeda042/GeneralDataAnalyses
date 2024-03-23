@@ -3,9 +3,32 @@ Scripts for general data analyses (Laboratory purposes)
 
 # Principal Component Analyses (R2)
 
-[Principal Component Analyses python scripts](scripts/PCA.py)
+[(Principal Component Analyses python scripts)](scripts/PCA.py)
 
-![2d gaussian distribution](images/result_PCA.png)  
+Assume that we have an arbitrary 2d gaussian distribution in a two-dimentional space.
+
+<img src="images/result_PCA.png" width="70%">
+
+Let's sample 1000 random points from the 2d gaussian distribution space.
+
+<img src="images/result_PCA_sampled_points.png" width="70%">
+
+Consider each pont as a set of vectors in a two-dimensional space:
+
+$$\mathbf{X} = 
+\left(\begin{matrix}
+x_1&\cdots&x_n \\
+y_1&\cdots&y_n 
+\end{matrix}\right)^\mathrm{T}\in \mathbb{R}^{n\times 2}$$
+
+
+
+
+
+
+
+
+
 
 
 
