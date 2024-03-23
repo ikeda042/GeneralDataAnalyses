@@ -1,9 +1,9 @@
 # General Data Analyses
 Scripts for general data analyses (Laboratory purposes)
 
-# Principal Component Analyses (R2)
+# Principal component analysis (R2)
 
-[(Principal Component Analyses python scripts)](scripts/PCA.py)
+[(Principal Component Analysis python scripts)](scripts/PCA.py)
 
 Assume the presence of an arbitrary 2D Gaussian distribution within a two-dimensional space.
 
@@ -71,6 +71,8 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
     <img src="images/result_PCA_PC1.png" width="70%">
 </div>
 
+
+# Singular value decomposition
 
 
 
