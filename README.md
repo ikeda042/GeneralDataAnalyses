@@ -31,23 +31,16 @@ $$\Sigma =
 
 
 
+, where $\mathbf{X_1} = (x_1\:\cdots x_n)$, $\mathbf{X_2} = (y_1\:\cdots y_n)$.
 
 
+Let's define a projection matrix for linear transformation $\mathbb{R}^2 \to \mathbb{R}$  as:
+
+$$\mathbf{w} = \begin{pmatrix}w_1&w_2\end{pmatrix}^\mathrm{T}$$
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Now the variance of the projected points to $\mathbb{R}$ is written as:
+$$s^2 = \mathbf{w}^\mathrm{T}\Sigma \mathbf{w}$$
 
 
 
