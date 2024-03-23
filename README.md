@@ -84,11 +84,21 @@ Assume that the following equations hold true:
 $$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
 $$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
 
-Then, we can derive:
+Then, we can derive the following:
 
 $$\mathbf{A}^\mathrm{T}\mathbf{A}\mathbf{v}=\sigma^2\mathbf{I}\mathbf{v}$$
 
+We can solve this equation as follows:
 
+$$|\mathbf{A}^\mathrm{T}\mathbf{A}\mathbf{v} - \sigma^2\mathbf{I}\mathbf{v}| = 0$$
+
+Therefore, the singular value is described as:
+
+$$\sqrt{\lambda}$$
+
+where 
+
+$$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 
 
