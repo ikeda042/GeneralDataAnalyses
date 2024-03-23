@@ -1,6 +1,52 @@
 # General Data Analyses
 Scripts for general data analyses (Laboratory purposes)
 
+# Principal Component Analyses (R2)
+
+[Principal Component Analyses python scripts](scripts/PCA.py)
+
+![2d gaussian distribution](images/result_PCA.png)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Setup a python virtual environment 
 
 1. Create a virtual environment for python3
