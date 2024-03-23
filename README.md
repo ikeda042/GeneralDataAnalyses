@@ -7,12 +7,14 @@ Scripts for general data analyses (Laboratory purposes)
 
 Assume the presence of an arbitrary 2D Gaussian distribution within a two-dimensional space.
 
-<img src="images/result_PCA.png" width="70%">
-
+<div style="text-align: center;">
+    <img src="images/result_PCA.png" width="70%">
+</div>
 Let us sample 1,000 random points from this 2D Gaussian distribution.
 
-<img src="images/result_PCA_sampled_points.png" width="70%">
-
+<div style="text-align: center;">
+    <img src="images/result_PCA_sampled_points.png" width="70%">
+</div>
 Consider each point as a set of vectors in a two-dimensional space:
 
 $$\mathbf{X} = 
