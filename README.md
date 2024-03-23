@@ -27,3 +27,10 @@ deactivate
 pip freeze > requirements.txt
 ```
 
+## INSTALL all the required modules
+
+```Bash
+pip install -r requirements.txt
+```
+
+
