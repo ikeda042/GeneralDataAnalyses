@@ -10,11 +10,13 @@ Assume the presence of an arbitrary 2D Gaussian distribution within a two-dimens
 <div style="text-align: center;">
     <img src="images/result_PCA.png" width="70%">
 </div>
+
 Let us sample 1,000 random points from this 2D Gaussian distribution.
 
 <div style="text-align: center;">
     <img src="images/result_PCA_sampled_points.png" width="70%">
 </div>
+
 Consider each point as a set of vectors in a two-dimensional space:
 
 $$\mathbf{X} = 
@@ -64,6 +66,10 @@ $$ \Sigma\mathbf{w}=\lambda\mathbf{w} $$
 Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1 > \lambda_2$) as the direction of the principal component.
 
 
+
+<div style="text-align: center;">
+    <img src="images/result_PCA_PC1.png" width="70%">
+</div>
 
 
 
