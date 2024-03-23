@@ -74,6 +74,13 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
 
 # Singular value decomposition
 
+## Singular value
+
+Let us consider these three vectors:
+
+$$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
+
+
 
 
 
