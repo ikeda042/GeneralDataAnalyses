@@ -71,26 +71,22 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
     <img src="images/result_PCA_PC1.png" width="70%">
 </div>
 
+# Singular Value Decomposition
 
-# Singular value decomposition
+## Singular Value
 
-## Singular value
-
-Let us consider these three vectors:
+Consider the following three vectors:
 
 $$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
 
-, and assume that the following equations are valid.
+Assume that the following equations hold true:
 
 $$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
 $$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
 
-then 
+Then, we can derive:
 
 $$\mathbf{A}^\mathrm{T}\mathbf{A}\mathbf{v}=\sigma^2\mathbf{I}\mathbf{v}$$
-
-
-
 
 
 
