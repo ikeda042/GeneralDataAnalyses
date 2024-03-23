@@ -22,9 +22,12 @@ y_1&\cdots&y_n
 \end{matrix}\right)^\mathrm{T}\in \mathbb{R}^{n\times 2}$$
 
 
+The covariance matrix for $\mathbf{X}$ is:
 
-
-
+$$\Sigma =
+ \begin{pmatrix} V[\mathbf{X_1}]&Cov[\mathbf{X_1},\mathbf{X_2}]
+ \\ 
+ Cov[\mathbf{X_1},\mathbf{X_2}]& V[\mathbf{X_2}] \end{pmatrix}\in \mathbb{R}^{2\times 2}$$
 
 
 
