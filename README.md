@@ -1,4 +1,4 @@
-# data_analysis_scripts
+# Geeral Data Analyses
 Scripts for general data analyses (Laboratory purposes)
 
 # Setup a python virtual environment 
