@@ -103,6 +103,10 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 
 
+# Growth curve fitting 
+
+Here, we calculate  the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
+
 
 
 
