@@ -107,7 +107,13 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
 
-Under constant conditions, with the initial cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), 
+Under constant conditions, with the initial cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), the following equation holds:
+
+
+
+
+
+
 
 Here, we calculate the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
 
