@@ -105,12 +105,19 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 # Growth curve fitting 
 
-Here, we calculate  the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
+The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
 
+Under constant conditions, with the initial cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), 
 
+Here, we calculate the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
 
+Here is an example of sequential OD600 data of an <i>escherichia coli</i> strain for 20 hours.
 
+<div style="text-align: center;">
+    <img src="images/growth_curve_od600_raw.png" width="70%">
+</div>
 
+Assume that the exponential phase in this condition is where OD600 is in between OD = 0.1 〜 1.0
 
 
 
