@@ -67,7 +67,6 @@ $$\Sigma =
  Cov[\mathbf{X_1},\mathbf{X_2}]& V[\mathbf{X_2}] \end{pmatrix}\in \mathbb{R}^{2\times 2}$$
 
 
-
 where 
 
 $\mathbf{X_1} = (x_1\:\cdots x_n)$, $\mathbf{X_2} = (y_1\:\cdots y_n)$
@@ -135,7 +134,11 @@ where
 
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
+## Singular Value Decomposition
 
+An arbitrary matrix $\mathbf{A}$'s SVD is given by: 
+
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
 
 # Growth curve fitting 
