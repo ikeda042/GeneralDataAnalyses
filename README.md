@@ -118,7 +118,6 @@ Here, we calculate  the specific growth rate ($\text{time}^{-1}$) of cells using
 
 
 
-
 # Setup a python virtual environment 
 
 1. Create a virtual environment for python3
