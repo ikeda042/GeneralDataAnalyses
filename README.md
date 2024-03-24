@@ -141,6 +141,7 @@ An arbitrary matrix $\mathbf{A}$'s SVD is given by:
 $$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
 
+
 # Growth curve fitting 
 
 The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
