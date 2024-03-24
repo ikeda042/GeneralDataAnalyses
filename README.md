@@ -151,6 +151,13 @@ With the model, we obtained the result where the specific growth rate is:
 
 $1.53 (\text{h}^{-1})$
 
+and the fitted growth curve is as shown below.
+
+<div style="text-align: center;">
+    <img src="images/growth_curve_fitted.png" width="70%">
+</div>
+
+
 
 
 
