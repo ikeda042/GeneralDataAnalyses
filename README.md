@@ -107,10 +107,17 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
 
-Under constant conditions, with the initial cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), the following equation holds:
+Under constant conditions, with the cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), the following equation holds:
 
+$\frac{dX}{dt}=\mu X$
 
+thus
 
+$\ln \frac{X}{X_0}=\mu t$
+
+where 
+
+$X_0$ (g) is the initial cell mass.
 
 
 
