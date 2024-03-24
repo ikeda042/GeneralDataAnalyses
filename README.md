@@ -142,6 +142,7 @@ thus we use a normal equation:
 
 $$\begin{pmatrix}\mu&\theta \end{pmatrix} = (\mathbf{W}^\mathrm{T}\mathbf{W})^{-1} \mathbf{W}^\mathrm{T}\mathbf{f}\in \mathbb{R}^2$$
 
+where 
 
 $$\mathbf{f} = (\ln X_1\cdots \ln X_n)^\mathrm{T}\in \mathbb{R}^n$$
 
