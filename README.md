@@ -1,7 +1,7 @@
 # General Data Analyses
 Scripts for general data analyses (Laboratory purposes)
 
-# Setup a python virtual environment 
+## Setup a python virtual environment 
 
 1. Create a virtual environment for python3
 
@@ -19,15 +19,15 @@ source venv/bin/activate
 deactivate
 ```
 
-# Commands
+## Commands
 
-## UPDATE requirements.txt
+### UPDATE requirements.txt
 
 ```Bash
 pip freeze > requirements.txt
 ```
 
-## INSTALL all the required modules
+### INSTALL all the required modules
 
 ```Bash
 pip install -r requirements.txt
