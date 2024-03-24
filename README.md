@@ -146,7 +146,11 @@ where
 
 $$\mathbf{f} = (\ln X_1\cdots \ln X_n)^\mathrm{T}\in \mathbb{R}^n$$
 
-$$\mathbf{W}=\begin{pmatrix} t_1&1&1\\ \vdots &\vdots&\vdots\\ t_n&1&1\end{pmatrix}$$
+$$\mathbf{W}=\begin{pmatrix} 
+    t_1&1&1\\ 
+    \vdots &\vdots&\vdots\\ 
+    t_n&1&1
+\end{pmatrix}$$
 
 With the model, we obtained the result where the specific growth rate is:
 
