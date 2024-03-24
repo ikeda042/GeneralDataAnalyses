@@ -120,8 +120,6 @@ where
 $X_0$ (g) is the initial cell mass.
 
 
-
-
 Here, we calculate the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
 
 Here is an example of sequential OD600 data of an <i>escherichia coli</i> strain for 20 hours.
@@ -130,7 +128,24 @@ Here is an example of sequential OD600 data of an <i>escherichia coli</i> strain
     <img src="images/growth_curve_od600_raw.png" width="70%">
 </div>
 
-Assume that the exponential phase in this condition is where OD600 is in between OD = 0.1 〜 1.0
+Assume that the cell math icreases ecponentially at the phase, we set a fitting model given by: 
+
+$X = e^{\mu t + \theta}$
+
+is also written as:
+
+$\ln X = \mu t + \theta$
+
+thus we use a normal equation: 
+
+$ \begin{pmatrix}\mu&\theta \end{pmatrix} = (\mathbf{W}^\mathrm{T}\mathbf{W})^{-1} \mathbf{W}^\mathrm{T}\mathbf{f}\in \mathbb{R}^2$
+
+
+$\mathbf{f} = (\ln X_1\cdots \ln X_n)^\mathrm{T}\in \mathbb{R}^n$
+
+$\mathbf{W} = \begin{pmatrix} t_1&1&1 \\ \vdots &\vdots & \vdots \\ t_n & 1&1\end{pmatrix}$
+
+
 
 
 
