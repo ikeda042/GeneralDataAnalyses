@@ -130,9 +130,7 @@ Here is an example of sequential OD600 data of an <i>escherichia coli</i> strain
 
 The exponential phase in this case is where OD600 is in between 0.01 and 0.10, therefore we only focus on the area.
 
-
-
-Assume that the cell math icreases ecponentially at the phase, we set a fitting model given by: 
+Assume that the cell math icreases exponentially at the phase, we set a fitting model given by: 
 
 $X = e^{\mu t + \theta}$
 
@@ -148,6 +146,10 @@ $ \begin{pmatrix}\mu&\theta \end{pmatrix} = (\mathbf{W}^\mathrm{T}\mathbf{W})^{-
 $\mathbf{f} = (\ln X_1\cdots \ln X_n)^\mathrm{T}\in \mathbb{R}^n$
 
 $\mathbf{W} = \begin{pmatrix} t_1&1&1 \\ \vdots &\vdots & \vdots \\ t_n & 1&1\end{pmatrix}$
+
+With the model, we obtained the result where the specific growth rate is:
+
+$1.53 (\text{h}^{-1})$
 
 
 
