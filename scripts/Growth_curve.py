@@ -539,3 +539,10 @@ plt.ylim(0, 1.0)
 unit = r"$h^{-1}$"
 plt.scatter(t_h, OD600, s=6, color="tab:blue")
 plt.savefig("growth_curve_od600_raw.png", dpi=500)
+
+filtered = [[i, j] for i, j in zip(t_h, OD600) if 0.01 <= j <= 0.1]
+t_h, OD600 = [i[0] for i in filtered], [i[1] for i in filtered]
+plt.scatter(t_h, OD600, s=6)
+plt.xlim(min(t_h) - 0.1, max(t_h) + 0.1)
+plt.ylim(min(OD600) - 0.05, max(OD600) + 0.05)
+plt.savefig("growth_curve_od600_exponential_area.png", dpi=500)
