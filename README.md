@@ -70,7 +70,7 @@ $$\Sigma =
 
 where 
 
-$$\mathbf{X_1} = (x_1\:\cdots x_n)$, $\mathbf{X_2} = (y_1\:\cdots y_n)$$
+$\mathbf{X_1} = (x_1\:\cdots x_n)$, $\mathbf{X_2} = (y_1\:\cdots y_n)$
 
 
 Define a projection matrix for the linear transformation  $\mathbb{R}^2 \to \mathbb{R}$  as:
