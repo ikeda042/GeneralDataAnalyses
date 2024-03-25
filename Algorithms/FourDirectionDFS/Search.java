@@ -1,4 +1,4 @@
-package Algorithms.FourDirectionBFS;
+package Algorithms.FourDirectionDFS;
 
 import java.util.Random;
 
