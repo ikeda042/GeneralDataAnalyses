@@ -1,5 +1,5 @@
 # General Data Analyses
-Scripts for general data analyses (Laboratory purposes)
+Scripts for general data analyses (Laboratory purposes) and some algorithms for learning purposes
 
 # Principal component analysis (R2)
 
