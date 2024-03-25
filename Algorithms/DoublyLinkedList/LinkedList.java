@@ -44,4 +44,8 @@ public class LinkedList<T extends Comparable<T>> {
         }
         return result;
     }
+
+    public static void main(String[] args) {
+        System.out.println("testing LinkedList");
+    }
 }
