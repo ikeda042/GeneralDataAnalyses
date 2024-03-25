@@ -25,6 +25,22 @@ public class Search {
         }
     }
 
+    public void dfsAll(int[][] array, int i, int j) {
+        if (j < 0 || i < 0 || j >= array.length || i >= array[1].length || array[i][j] != 1) {
+            return;
+        } else {
+            array[i][j] = 2;
+            dfs(array, i + 1, j);
+            dfs(array, i + 1, j + 1);
+            dfs(array, i - 1, j);
+            dfs(array, i - 1, j - 1);
+            dfs(array, i, j - 1);
+            dfs(array, i + 1, j - 1);
+            dfs(array, i, j + 1);
+            dfs(array, i - 1, j + 1);
+        }
+    }
+
     public String toString() {
         String result = "";
         for (int i = 0; i < array.length; i++) {
@@ -56,7 +72,10 @@ public class Search {
         }
         System.out.println(search);
 
-        search.dfs(search.array, 10, 10);
+        // search.dfs(search.array, 10, 10);
+        // System.out.println(search);
+
+        search.dfsAll(search.array, 10, 10);
         System.out.println(search);
     }
 }
