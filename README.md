@@ -112,8 +112,7 @@ RNA Seqの移植
 
 最近説延期追放の移植
 
-
-
+Micro plate reader 自動化
 
 
 
