@@ -106,7 +106,11 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 
 
+# TODO 
 
+RNA Seqの移植
+
+最近説延期追放の移植
 
 
 
