@@ -101,6 +101,64 @@ where
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 
+# Growth curve fitting 
+
+The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
+
+Under constant conditions, with the cell mass denoted as X (g), the specific growth rate as μ ($\text{time}^{-1}$), and time as t($h$), the following equation holds:
+
+$$\frac{dX}{dt}=\mu X$$
+
+thus
+
+$$\ln \frac{X}{X_0}=\mu t$$
+
+where 
+
+$X_0$ (g) is the initial cell mass.
+
+
+Here, we calculate the specific growth rate ($\text{time}^{-1}$) of cells using the cell concentration (OD600) at each time point during the exponential growth phase.
+
+Here is an example of sequential OD600 data of an <i>Escherichia coli</i> strain for 20 hours.
+
+<div style="text-align: center;">
+    <img src="images/growth_curve_od600_raw.png" width="70%">
+</div>
+
+The exponential phase in this case is where OD600 is in between 0.01 and 0.10, therefore we only focus on the area.
+
+Assume that the cell math icreases exponentially at the phase, we set a fitting model given by: 
+
+$$X = e^{\mu t + \theta}$$
+
+is also written as:
+
+$$\ln X = \mu t + \theta$$
+
+thus we use a normal equation: 
+
+$$\begin{pmatrix}\mu&\theta \end{pmatrix} = (\mathbf{W}^\mathrm{T}\mathbf{W})^{-1} \mathbf{W}^\mathrm{T}\mathbf{f}\in \mathbb{R}^2$$
+
+where 
+
+$$\mathbf{f} = (\ln X_1\cdots \ln X_n)^\mathrm{T}\in \mathbb{R}^n$$
+
+$$\mathbf{W}=\begin{pmatrix} 
+    t_1&1&1\\ 
+    \vdots &\vdots&\vdots\\ 
+    t_n&1&1
+\end{pmatrix}$$
+
+With the model, we obtained the result where the specific growth rate is:
+
+$$1.53 (\text{h}^{-1})$$
+
+and the fitted growth curve is as shown below.
+
+<div style="text-align: center;">
+    <img src="images/growth_curve_fitted.png" width="70%">
+</div>
 
 
 
