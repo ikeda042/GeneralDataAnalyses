@@ -169,6 +169,52 @@ and the fitted growth curve is as shown below.
 
 
 
+# Oligonucleotide Melting Temperature by Nearest Neighbors
+
+In this section, we calculate Oligonucleotide Melting Temperature, denoted as Tm, with Nearest Neighbors method.
+
+## Nearest Neighbors
+
+With Nearest Neighbors method, Tm is calculated as:
+
+$$T_{m} = \frac{\Delta H}{A + \Delta S + R\ln \frac{C}{4}} - 273.15+16.6\log[Na^{+}]$$
+
+, where 
+
+Tm = Melting temperature in ℃
+
+$\Delta H$ = enthalpy change in $\frac{kcal}{mol}$
+
+A = constant of -0.0108 $\frac{kcal}{K・mol}$
+
+$\Delta S$  = entropy change in $\frac{kcal}{K・mol}$
+
+R = gas constant of 0.00199 $\frac{kcal}{K・mol}$
+
+C = oligonucleotide concentration in $M$ (as $mol/L$)
+
+$[Na^{+}]$ = Sodium ion conc. in  $M$ (as $mol/L$)
+
+and the parameters are already emprically determined as shown:
+
+|  | $\Delta H$ | $\Delta S$|
+|------|:--------:|:--------:|
+| AA   | -9.1   | -0.024 |
+| AT   | -8.6   | -0.0239|
+| TA   | -6.0   | -0.0169|
+| CA   | -5.8   | -0.0129|
+| GT   | -6.5   | -0.0173|
+| CT   | -7.8   | -0.0208|
+| GA   | -5.6   | -0.0135|
+| CG   | -11.9  | -0.0278|
+| GC   | -11.1  | -0.0267|
+| GG   | -11.0  | -0.0266|
+| TT   | -9.1   | -0.024 |
+| TG   | -5.8   | -0.0129|
+| AC   | -6.5   | -0.0173|
+| AG   | -7.8   | -0.0208|
+| TC   | -5.6   | -0.0135|
+| CC   | -11.0  | -0.0266|
 
 # TODO 
 
