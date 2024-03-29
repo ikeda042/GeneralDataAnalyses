@@ -31,3 +31,6 @@ data2 = [
 
 df1 = pd.DataFrame(data1, columns=headers)
 df2 = pd.DataFrame(data2, columns=headers)
+
+print(df1)
+print(df2)
