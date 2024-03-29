@@ -104,7 +104,7 @@ $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
 A singular value decompositon of $\mathbf{A}$ is written as:
 
-$$\mathbf{A}=\mathbf{}$$
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
 
 # Growth curve fitting 
