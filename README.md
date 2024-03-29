@@ -106,6 +106,10 @@ A singular value decompositon of $\mathbf{A}$ is written as:
 
 $$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
+, where 
+
+$$\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{U}\in\mathbb{R}^{m\times m},\mathbf{\Sigma}\in\mathbb{R}^{m\times n},\mathbf{V}\in\mathbb{R}^{n\times n}$$
+
 
 # Growth curve fitting 
 
