@@ -68,7 +68,7 @@ reduced_data1 = reduced_data[: len(data1)]
 reduced_data2 = reduced_data[len(data1) :]
 
 
-plt.figure(figsize=(9, 6))
+plt.figure(figsize=(6, 6))
 ax = plt.axes(projection="3d")
 ax.view_init(elev=20, azim=20)
 ax.scatter3D(
@@ -76,7 +76,7 @@ ax.scatter3D(
     reduced_data1[:, 1],
     reduced_data1[:, 2],
     color="blue",
-    label="Negative Ctrl.",
+    label="data1",
     alpha=0.6,
 )
 ax.scatter3D(
@@ -84,11 +84,11 @@ ax.scatter3D(
     reduced_data2[:, 1],
     reduced_data2[:, 2],
     color="red",
-    label="Positive Ctrl.",
+    label="data2",
     alpha=0.6,
 )
 plt.title("3D Projection using SVD")
 plt.xlabel(f"Component 1 s = {round(S[0],1)}")
 plt.ylabel(f"Component 2 s = {round(S[1],1)} ")
 plt.legend()
-plt.savefig("result_3D.png", dpi=500)
+plt.savefig("images/result_SVD.png", dpi=500)
