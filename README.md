@@ -125,6 +125,21 @@ where
 
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
+## Dimentionality reduction with SVD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
