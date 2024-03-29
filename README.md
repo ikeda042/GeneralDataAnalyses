@@ -75,6 +75,37 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
 
 ## Singular Value
 
+A singular value decompositon of $\mathbf{A}$ is written as:
+
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+, where 
+
+$$\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{U}\in\mathbb{R}^{m\times m},\mathbf{\Sigma}\in\mathbb{R}^{m\times n},\mathbf{V}\in\mathbb{R}^{n\times n}$$
+
+Right Singular Vectors:
+
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}= \mathbf{V}\Sigma^\mathrm{T}\mathbf{U}^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+thus 
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=\mathbf{V}\Sigma^2\mathbf{V}^\mathrm{T}$$
+
+Right Singular Vectors:
+
+$$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}$$
+
+thus
+
+$$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\Sigma^2\mathbf{U}^\mathrm{T}$$
+
+
+Hence, 
+
 Consider the following three vectors:
 
 $$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
@@ -100,30 +131,9 @@ where
 
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
-## Singular value decomposition
-
-A singular value decompositon of $\mathbf{A}$ is written as:
-
-$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
-
-, where 
-
-$$\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{U}\in\mathbb{R}^{m\times m},\mathbf{\Sigma}\in\mathbb{R}^{m\times n},\mathbf{V}\in\mathbb{R}^{n\times n}$$
-
-The computation:
-
-$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
-
-$$\mathbf{A}^\mathrm{T}\mathbf{A}=(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
-
-$$\mathbf{A}^\mathrm{T}\mathbf{A}= \mathbf{V}\Sigma^\mathrm{T}\mathbf{U}^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
-
-thus 
-
-$$\mathbf{A}^\mathrm{T}\mathbf{A}=\mathbf{V}\Sigma^2\mathbf{V}^\mathrm{T}$$
 
 
-$$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}$$
+
 
 
 
