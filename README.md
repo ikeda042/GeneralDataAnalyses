@@ -160,8 +160,9 @@ data2:
 | 9  | 0.19 | 0.57 | 0.02 | 0.12 | 0.10 |
 
 
+Using the raw data, it is impossible to visualize as the data dimension is higher than 3. Thus, try to reduce the dimensionality.
 
-
+As the first step, let us visualize the singular values for each dimension.
 
 
 
