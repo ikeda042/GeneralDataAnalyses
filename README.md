@@ -75,11 +75,36 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
 
 ## Singular Value
 
-Consider the following three vectors:
+A singular value decompositon of $\mathbf{A}$ is written as:
 
-$$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
-Assume that the following equations hold true:
+, where 
+
+$$\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{U}\in\mathbb{R}^{m\times m},\mathbf{\Sigma}\in\mathbb{R}^{m\times n},\mathbf{V}\in\mathbb{R}^{n\times n}$$
+
+Right Singular Vectors:
+
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}= \mathbf{V}\Sigma^\mathrm{T}\mathbf{U}^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+thus 
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=\mathbf{V}\Sigma^2\mathbf{V}^\mathrm{T}$$
+
+Right Singular Vectors:
+
+$$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}$$
+
+thus
+
+$$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\Sigma^2\mathbf{U}^\mathrm{T}$$
+
+
+Hence, 
 
 $$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
 $$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
@@ -99,6 +124,85 @@ $$\sqrt{\lambda}$$
 where 
 
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
+
+## Dimentionality reduction with SVD
+
+Assume that we have two series of data that describe expression patterns of stress response genes.
+
+data1:
+
+|    | rpoS | dnaK | oxyR | sosR | cspA |
+|----|------|------|------|------|------|
+| 0  | 0.61 | 0.16 | 0.08 | 0.05 | 0.10 |
+| 1  | 0.54 | 0.18 | 0.07 | 0.10 | 0.12 |
+| 2  | 0.57 | 0.10 | 0.06 | 0.15 | 0.12 |
+| 3  | 0.39 | 0.16 | 0.17 | 0.13 | 0.15 |
+| 4  | 0.45 | 0.14 | 0.18 | 0.14 | 0.08 |
+| 5  | 0.42 | 0.08 | 0.12 | 0.19 | 0.19 |
+| 6  | 0.50 | 0.17 | 0.05 | 0.16 | 0.11 |
+| 7  | 0.44 | 0.16 | 0.08 | 0.18 | 0.15 |
+| 8  | 0.51 | 0.12 | 0.23 | 0.05 | 0.09 |
+| 9  | 0.59 | 0.04 | 0.12 | 0.05 | 0.20 |
+
+data2:
+
+|    | rpoS | dnaK | oxyR | sosR | cspA |
+|----|------|------|------|------|------|
+| 0  | 0.19 | 0.60 | 0.01 | 0.08 | 0.12 |
+| 1  | 0.19 | 0.44 | 0.12 | 0.15 | 0.11 |
+| 2  | 0.14 | 0.46 | 0.18 | 0.11 | 0.11 |
+| 3  | 0.11 | 0.61 | 0.08 | 0.14 | 0.07 |
+| 4  | 0.05 | 0.53 | 0.15 | 0.16 | 0.12 |
+| 5  | 0.02 | 0.50 | 0.16 | 0.16 | 0.16 |
+| 6  | 0.16 | 0.54 | 0.10 | 0.07 | 0.13 |
+| 7  | 0.04 | 0.53 | 0.16 | 0.17 | 0.10 |
+| 8  | 0.17 | 0.46 | 0.08 | 0.12 | 0.17 |
+| 9  | 0.19 | 0.57 | 0.02 | 0.12 | 0.10 |
+
+
+Using the raw data, it is impossible to visualize as the data dimension is higher than 3. Thus, try to reduce the dimensionality.
+
+As the first step, let us visualize the singular values for each dimension.
+
+
+<div style="text-align: center;">
+    <img src="images/swiss_roll_SVD.png" width="70%">
+</div>
+
+Since the cumulative contribution rate exceeds 90% up to three dimensions, we will project the data into a three-dimensional space for analysis.
+
+<div style="text-align: center;">
+    <img src="images/result_SVD.png" width="70%">
+</div>
+
+Upon projecting the data into a three-dimensional space, it becomes evident that the gene expression patterns of data1 and data2 are distinctively separated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Growth curve fitting 
