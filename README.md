@@ -100,6 +100,12 @@ where
 
 $$\det (\mathbf{B}-\lambda\mathbf{I})=0$$
 
+## Singular value decomposition
+
+A singular value decompositon of $\mathbf{A}$ is written as:
+
+$$\mathbf{A}=\mathbf{}$$
+
 
 # Growth curve fitting 
 
