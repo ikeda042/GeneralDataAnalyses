@@ -106,12 +106,6 @@ $$\mathbf{A}\mathbf{A}^\mathrm{T}=\mathbf{U}\Sigma^2\mathbf{U}^\mathrm{T}$$
 
 Hence, 
 
-Consider the following three vectors:
-
-$$\mathbf{A}\in\mathbb{R}^{m\times n}, \mathbf{v}\in\mathbb{R}^n,\mathbf{u}\in\mathbb{R}^m$$
-
-Assume that the following equations hold true:
-
 $$\mathbf{A}\mathbf{v}=\sigma \mathbf{u}$$
 $$\mathbf{A}^\mathrm{T}\mathbf{u}=\sigma\mathbf{v}$$
 
