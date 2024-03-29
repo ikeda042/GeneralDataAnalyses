@@ -110,6 +110,38 @@ $$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
 
 $$\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{U}\in\mathbb{R}^{m\times m},\mathbf{\Sigma}\in\mathbb{R}^{m\times n},\mathbf{V}\in\mathbb{R}^{n\times n}$$
 
+The computation is:
+
+$$\mathbf{A}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T})^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}= \mathbf{V}\Sigma^\mathrm{T}\mathbf{U}^\mathrm{T}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\mathrm{T}$$
+
+thus 
+
+$$\mathbf{A}^\mathrm{T}\mathbf{A}=\mathbf{V}\Sigma^2\mathbf{V}^\mathrm{T}$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Growth curve fitting 
 
