@@ -165,7 +165,11 @@ Using the raw data, it is impossible to visualize as the data dimension is highe
 As the first step, let us visualize the singular values for each dimension.
 
 
+<div style="text-align: center;">
+    <img src="images/swiss_roll_SVD.png" width="70%">
+</div>
 
+Since the cumulative contribution rate exceeds 90% up to three dimensions, we will project the data into a three-dimensional space for analysis.
 
 
 
