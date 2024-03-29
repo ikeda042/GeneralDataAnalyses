@@ -171,7 +171,11 @@ As the first step, let us visualize the singular values for each dimension.
 
 Since the cumulative contribution rate exceeds 90% up to three dimensions, we will project the data into a three-dimensional space for analysis.
 
+<div style="text-align: center;">
+    <img src="images/result_SVD.png" width="70%">
+</div>
 
+Upon projecting the data into a three-dimensional space, it becomes evident that the gene expression patterns of data1 and data2 are distinctively separated.
 
 
 
