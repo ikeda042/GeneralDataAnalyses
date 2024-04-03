@@ -320,13 +320,6 @@ and the parameters are already emprically determined as shown:
 | TC   | -5.6   | -0.0135|
 | CC   | -11.0  | -0.0266|
 
-# TODO 
-
-RNA Seqの移植
-
-最近説延期追放の移植
-
-Micro plate reader 自動化
 
 
 
