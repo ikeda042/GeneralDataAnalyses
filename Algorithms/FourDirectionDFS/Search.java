@@ -72,8 +72,8 @@ public class Search {
         }
         System.out.println(search);
 
-        // search.dfs(search.array, 10, 10);
-        // System.out.println(search);
+        search.dfs(search.array, 10, 10);
+        System.out.println(search);
 
         search.dfsAll(search.array, 10, 10);
         System.out.println(search);
