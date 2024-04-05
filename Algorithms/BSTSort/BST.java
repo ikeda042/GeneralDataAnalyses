@@ -54,7 +54,7 @@ public class BST<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        BST bst = new BST<>();
+        BST<String> bst = new BST<>();
         String[] array = new String[26];
         for (int i = 0; i < 26; i++) {
             array[25 - i] = "" + (char) (97 + i);

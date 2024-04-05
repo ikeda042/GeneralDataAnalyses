@@ -52,7 +52,7 @@ public class LinkedList<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        LinkedList l = new LinkedList(new Node(0));
+        LinkedList<Integer> l = new LinkedList<Integer>(new Node<Integer>(0));
         for (int i = 1; i < 10; i++) {
             l.add(i);
         }
