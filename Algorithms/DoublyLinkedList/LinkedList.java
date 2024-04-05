@@ -47,5 +47,16 @@ public class LinkedList<T extends Comparable<T>> {
 
     public static void main(String[] args) {
         System.out.println("testing LinkedList");
+        Node<Integer> head = new Node<Integer>(1);
+        LinkedList<Integer> list = new LinkedList<Integer>(head);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        System.out.println(list);
+        list.isReversed = true;
+        System.out.println(list);
+        list.isReversed = false;
+        System.out.println(list);
+
     }
 }
