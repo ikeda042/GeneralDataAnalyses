@@ -16,6 +16,6 @@ fig = plt.figure()
 for i,j in zip(data, data_flat):
     plt.scatter(t_h, i, s=1, c='tab:blue', alpha=0.5)  
     plt.scatter(t_h, j, s=1, c='tab:red', alpha=0.5)
-fig.savefig("iamges/Coef1.png")
+fig.savefig("images/Coef1.png")
 
 
