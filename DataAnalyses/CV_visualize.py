@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 sns.set()
 
@@ -16,6 +17,18 @@ fig = plt.figure()
 for i,j in zip(data, data_flat):
     plt.scatter(t_h, i, s=1, c='tab:blue', alpha=0.5)  
     plt.scatter(t_h, j, s=1, c='tab:red', alpha=0.5)
-fig.savefig("images/Coef1.png")
+fig.savefig("images/CV_raw.png")
+
+#各タイムポイントでのdataおよびdata_flatの標準偏差を計算
+
+std_data = [np.std([i[j] for i in data]) for j in range(len(OD600))]
+std_data_flat = [np.std([i[j] for i in data_flat]) for j in range(len(OD600_flat))]
+mean_data = [np.mean([i[j] for i in data]) for j in range(len(OD600))]
+mean_data_flat = [np.mean([i[j] for i in data_flat]) for j in range(len(OD600_flat))]
+fig = plt.figure()
+plt.scatter(t_h, std_data, label="data", c='tab:blue',s=1)
+plt.scatter(t_h, std_data_flat, label="data_flat", c='tab:red',s=1)
+plt.legend()
+fig.savefig("images/CV_std.png")
 
 
