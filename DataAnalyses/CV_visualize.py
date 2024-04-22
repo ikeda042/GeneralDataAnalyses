@@ -10,25 +10,34 @@ t_h = [0.0, 0.08333333333333333, 0.16666666666666666, 0.25, 0.3333333333333333, 
 
 OD600_flat = [random.random()*0.003599999999999992 for i in range(len(OD600))]
 random.seed(123123)
-data = [[random.random()*random.choice([0.1, -0.1]) + j for j in OD600] for j in range(50)]
-data_flat = [[random.random()*random.choice([0.1, -0.1]) + j/random.choice([14,16,3,12]) for j in OD600_flat] for j in range(50)]
+data = np.array([[random.random()*random.choice([0.1, -0.1]) + j for j in OD600] for j in range(50)]).T
+data_flat = np.array([[random.random()*random.choice([0.1, -0.1]) + j/random.choice([14,16,3,12]) for j in OD600_flat] for j in range(50)]).T
 fig = plt.figure()
 
-for i,j in zip(data, data_flat):
-    plt.scatter(t_h, i, s=1, c='tab:blue', alpha=0.5)  
-    plt.scatter(t_h, j, s=1, c='tab:red', alpha=0.5)
+for i in range(50):
+    plt.plot(t_h, data[:,i], c='tab:blue', alpha=0.1)
+    plt.plot(t_h, data_flat[:,i], c='tab:red', alpha=0.1)
 fig.savefig("images/CV_raw.png")
 
 #各タイムポイントでのdataおよびdata_flatの標準偏差を計算
 
-std_data = [np.std([i[j] for i in data]) for j in range(len(OD600))]
-std_data_flat = [np.std([i[j] for i in data_flat]) for j in range(len(OD600_flat))]
-mean_data = [np.mean([i[j] for i in data]) for j in range(len(OD600))]
-mean_data_flat = [np.mean([i[j] for i in data_flat]) for j in range(len(OD600_flat))]
+std_data = np.std(data, axis=1)
+std_data_flat = np.std(data_flat, axis=1)
+
 fig = plt.figure()
-plt.scatter(t_h, std_data, label="data", c='tab:blue',s=1)
-plt.scatter(t_h, std_data_flat, label="data_flat", c='tab:red',s=1)
+plt.plot(t_h, std_data, c='tab:blue', label='data')
+plt.plot(t_h, std_data_flat, c='tab:red', label='data_flat')
 plt.legend()
 fig.savefig("images/CV_std.png")
 
 
+#各タイムポイントでの変動係数を計算
+
+cv_data = np.std(data, axis=1)/np.mean(data, axis=1)
+cv_data_flat = np.std(data_flat, axis=1)/np.mean(data_flat, axis=1)
+
+fig = plt.figure()
+plt.plot(t_h, cv_data, c='tab:blue', label='data')
+plt.plot(t_h, cv_data_flat, c='tab:red', label='data_flat')
+plt.legend()
+fig.savefig("images/CV_cv.png")
