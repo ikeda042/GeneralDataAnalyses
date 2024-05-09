@@ -14,7 +14,6 @@ from scipy.linalg import eig
 import os
 import bisect
 from dataclasses import dataclass
-from scipy.stats import gaussian_kde
 
 @dataclass
 class Point:
