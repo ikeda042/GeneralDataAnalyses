@@ -246,7 +246,7 @@ class Cell:
         return u1, u2, u1_contour, u2_contour, min_u1, max_u1, u1_c, u2_c, U, contour_U
 
     @staticmethod
-    def _poly_fit(U: list[list[float]], degree: int = 5) -> list[float]:
+    def _poly_fit(U: list[list[float]], degree: int = 2) -> list[float]:
         u1_values = np.array([i[1] for i in U])
         f_values = np.array([i[0] for i in U])
         W = np.vander(u1_values, degree + 1)
