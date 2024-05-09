@@ -8,13 +8,13 @@ Scripts for general data analyses (Laboratory purposes) and some algorithms for 
 Assume the presence of an arbitrary 2D Gaussian distribution within a two-dimensional space.
 
 <div style="text-align: center;">
-    <img src="images/result_PCA.png" width="70%">
+    <img src="docs_images/result_PCA.png" width="70%">
 </div>
 
 Let us sample 1,000 random points from this 2D Gaussian distribution.
 
 <div style="text-align: center;">
-    <img src="images/result_PCA_sampled_points.png" width="70%">
+    <img src="docs_images/result_PCA_sampled_points.png" width="70%">
 </div>
 
 Consider each point as a set of vectors in a two-dimensional space:
@@ -68,7 +68,7 @@ Select the eigenvector corresponding to the largest eigenvalue (where $\lambda_1
 
 
 <div style="text-align: center;">
-    <img src="images/result_PCA_PC1.png" width="70%">
+    <img src="docs_images/result_PCA_PC1.png" width="70%">
 </div>
 
 # Singular Value Decomposition
@@ -166,13 +166,13 @@ As the first step, let us visualize the singular values for each dimension.
 
 
 <div style="text-align: center;">
-    <img src="images/swiss_roll_SVD.png" width="70%">
+    <img src="docs_images/swiss_roll_SVD.png" width="70%">
 </div>
 
 Since the cumulative contribution rate exceeds 90% up to three dimensions, we will project the data into a three-dimensional space for analysis.
 
 <div style="text-align: center;">
-    <img src="images/result_SVD.png" width="70%">
+    <img src="docs_images/result_SVD.png" width="70%">
 </div>
 
 Upon projecting the data into a three-dimensional space, it becomes evident that the gene expression patterns of data1 and data2 are distinctively separated.
@@ -200,14 +200,14 @@ Here, we calculate the specific growth rate ($\text{time}^{-1}$) of cells using 
 Here is an example of sequential OD600 data of an <i>Escherichia coli</i> strain for 20 hours.
 
 <div style="text-align: center;">
-    <img src="images/growth_curve_od600_raw.png" width="70%">
+    <img src="docs_images/growth_curve_od600_raw.png" width="70%">
 </div>
 
 The exponential phase in this case is where OD600 is in between 0.01 and 0.10, therefore we only focus on the area.
 
 
 <div style="text-align: center;">
-    <img src="images/growth_curve_od600_exponential_area.png" width="70%">
+    <img src="docs_images/growth_curve_od600_exponential_area.png" width="70%">
 </div>
 
 
@@ -240,7 +240,7 @@ $$1.53 (\text{h}^{-1})$$
 and the fitted growth curve is as shown below.
 
 <div style="text-align: center;">
-    <img src="images/growth_curve_fitted.png" width="70%">
+    <img src="docs_images/growth_curve_fitted.png" width="70%">
 </div>
 
 
