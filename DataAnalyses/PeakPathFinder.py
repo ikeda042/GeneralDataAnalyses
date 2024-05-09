@@ -340,7 +340,7 @@ class Cell:
 
 
 if __name__ == "__main__":
-    cells: Cells = Cells(db_path="../demodata/cell.db")
+    cells: Cells = Cells(db_path="demodata/cell.db")
 
     for cell in cells.get_cells():
         cell.write_image()
