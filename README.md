@@ -178,33 +178,6 @@ Since the cumulative contribution rate exceeds 90% up to three dimensions, we wi
 Upon projecting the data into a three-dimensional space, it becomes evident that the gene expression patterns of data1 and data2 are distinctively separated.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Growth curve fitting 
 
 The specific growth rate is a coefficient that represents how much one cell divides per unit of time.
@@ -319,6 +292,9 @@ and the parameters are already emprically determined as shown:
 | AG   | -7.8   | -0.0208|
 | TC   | -5.6   | -0.0135|
 | CC   | -11.0  | -0.0266|
+
+
+## Quantification of fluo. localization 
 
 
 
