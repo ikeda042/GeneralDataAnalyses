@@ -206,7 +206,7 @@ class Cell:
         plt.savefig(f"realtime_replot.png")
         plt.close(fig)
 
-        self._find_path(self.cell_id, u1, u2, theta, points_inside_cell_1)
+        return self._find_path(self.cell_id, u1, u2, theta, points_inside_cell_1)
 
     @staticmethod
     def _basis_conversion(
