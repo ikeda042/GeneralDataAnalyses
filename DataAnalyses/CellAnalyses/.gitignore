@@ -1,0 +1,4 @@
+*
+!*.py
+!cell.db
+!.gitignore
