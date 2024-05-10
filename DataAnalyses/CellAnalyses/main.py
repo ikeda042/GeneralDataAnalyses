@@ -5,12 +5,12 @@ from combine_images import combine_images_function
 from migration import extract_1, extract_NA
 
 # dbのパス(sqlite3、PhenoPixelから出力したデータベース)
-db_path = "cell.db"
+db_path = "DataAnalyses/CellAnalyses/cell.db"
 
 # db　migration
 # Migration.pyを参照
-extract_NA(db_path)
-extract_1(db_path)
+# extract_NA(db_path)
+# extract_1(db_path)
 
 cells: Cells = Cells(db_path=f"{db_path.split(".")[0]}_1.db",only_ph=True)
 
