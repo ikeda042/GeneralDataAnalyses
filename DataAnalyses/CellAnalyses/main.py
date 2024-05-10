@@ -5,7 +5,7 @@ from combine_images import combine_images_function
 from migration import extract_1, extract_NA
 
 # dbのパス(sqlite3、PhenoPixelから出力したデータベース)
-db_path = "sk25_LB_3ml 1.db"
+db_path = "cell.db"
 
 # db　migration
 # Migration.pyを参照
