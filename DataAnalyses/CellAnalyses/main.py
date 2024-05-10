@@ -12,7 +12,7 @@ db_path = "demo-dataset/cell.db"
 # extract_NA(db_path)
 # extract_1(db_path)
 
-cells: Cells = Cells(db_path=f"{db_path.split(".")[0]}_1.db",only_ph=True)
+cells: Cells = Cells(db_path=f"{db_path.split(".")[0]}.db",only_ph=True)
 
 # 細胞IDの取得
 cell_ids = []
