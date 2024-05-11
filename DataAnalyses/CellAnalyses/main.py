@@ -28,77 +28,68 @@ peak_path_analysis = True
 #CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
 extract_1_from_dbconsole(db_path)
 ##########################################################################################################################################################################
+def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: bool, only_ph: bool):
+    cells: Cells = Cells(db_path=f"{db_path.split('.')[0]}.db", only_ph=only_ph)
 
-cells: Cells = Cells(db_path=f"{db_path.split(".")[0]}.db",only_ph=only_ph)
+    cell_ids = []
+    areas = []
+    volumes = []
+    widths = []
+    paths = []
 
-# 細胞IDの取得
-cell_ids = []
-# 形態パラメータ保持
-areas = []
-volumes = []
-widths = []
-# peak-path 解析用のpath保持
-paths = []
+    for cell in tqdm(cells.get_cells()):
+        cell.write_image(only_ph=only_ph)
+        cell_ids.append(cell.cell_id)
 
-for cell in tqdm(cells.get_cells()):
-    # PHのみのモードと蛍光二重レイヤを選択するs
-    cell.write_image(only_ph=only_ph)
-    cell_ids.append(cell.cell_id)
+        if morphology_analysis:
+            area, volume, width = cell.replot_contour()
+            areas.append(area)
+            volumes.append(volume)
+            widths.append(width)
+        
+        if peak_path_analysis:
+            path: list[float] = cell.replot(calc_path=True, degree=4)
+            paths.append(path)
 
-    # 細胞輪郭を用いて面積、体積、幅を計算
     if morphology_analysis:
-        area, volume, width = cell.replot_contour()
-        areas.append(area)
-        volumes.append(volume)
-        widths.append(width)
-    
-    # peak-path解析
+        with open(f"{db_path.split('.')[0]}_width_area_volume.csv", "w") as fpout:
+            header = "width(px),area(px^2),volume(px^3)"
+            fpout.write(header + "\n")
+            for w, a, v in zip(widths, areas, volumes):
+                fpout.write(f"{w},{a},{v}\n")
+
     if peak_path_analysis:
-        path: list[float] = cell.replot(calc_path=True, degree=4)
-        paths.append(path)
+        with open(f"{db_path.split('.')[0]}_paths.txt", "w") as fpout:
+            for path,cell_id in zip(paths, cell_ids):
+                if len(path) > 20:
+                    fpout.write(f"{cell_id}|{'.'.join([str(i) for i in path])}\n")
+                else:
+                    print(f"cell_id: {cell_id} is too short path.")
 
-if morphology_analysis:
-    # 形態解析の結果をcsvファイルに保存
-    with open(f"{db_path.split(".")[0]}_width_area_volume.csv", "w") as fpout:
-        header = "width(px),area(px^2),volume(px^3)"
-        fpout.write(header + "\n")
-        for w, a, v in zip(widths, areas, volumes):
-            fpout.write(f"{w},{a},{v}\n")
+    try:
+        combine_images_function(200, f"{db_path.split('.')[0]}_images_ph", "images/ph")
+    except:
+        print("No images/ph directory")
 
-# UMAPによるクラスター解析(pathの計算が終了していることを前提とする)
-# pathは一旦txtファイルに保存しておく。この時、cell_id|pathの形式で保存する
-if peak_path_analysis:
-    with open(f"{db_path.split(".")[0]}_paths.txt", "w") as fpout:
-        for path,cell_id in zip(paths, cell_ids):
-            if len(path) > 20:
-                fpout.write(f"{cell_id}|{'.'.join([str(i) for i in path])}\n")
-            else:
-                print(f"cell_id: {cell_id} is too short path.")
-    # cluster_analysis(f"{db_path.split(".")[0]}_paths.txt", cells)
+    try:
+        combine_images_function(200, f"{db_path.split('.')[0]}_images_replot", "images/replot")
+    except:
+        print("No images/replot directory")
 
-# 画像の結合
-try:
-    combine_images_function(200, f"{db_path.split(".")[0]}_images_ph", "images/ph")
-except:
-    print("No images/ph directory")
+    try:
+        combine_images_function(500, f"{db_path.split('.')[0]}_images_volume", "images/volume")
+    except:
+        print("No images/volume directory")
 
-try:
-    combine_images_function(200, f"{db_path.split(".")[0]}_images_replot", "images/replot")
-except:
-    print("No images/replot directory")
+    try:
+        combine_images_function(500, f"{db_path.split('.')[0]}_images_cylinders", "images/cylinders")
+    except:
+        print("No images/cylinders directory")
 
-try:
-    combine_images_function(500, f"{db_path.split(".")[0]}_images_volume", "images/volume")
-except:
-    print("No images/volume directory")
-try:
-    combine_images_function(500, f"{db_path.split(".")[0]}_images_cylinders", "images/cylinders")
-except:
-    print("No images/cylinders directory")
-try:
-    combine_images_function(500, f"{db_path.split(".")[0]}_images_paths", "images/path")
-except:
-    print("No images/contour directory")
+    try:
+        combine_images_function(500, f"{db_path.split('.')[0]}_images_paths", "images/path")
+    except:
+        print("No images/contour directory")
 
 
 
