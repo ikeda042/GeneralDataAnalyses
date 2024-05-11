@@ -71,7 +71,7 @@ if peak_path_analysis:
     with open(f"{db_path.split(".")[0]}_paths.txt", "w") as fpout:
         for path,cell_id in zip(paths, cell_ids):
             if len(path) > 20:
-                fpout.write(f"{cell_id}|{'.'.join(path)}\n")
+                fpout.write(f"{cell_id}|{'.'.join([str(i) for i in path])}\n")
             else:
                 print(f"cell_id: {cell_id} is too short path.")
     # cluster_analysis(f"{db_path.split(".")[0]}_paths.txt", cells)
