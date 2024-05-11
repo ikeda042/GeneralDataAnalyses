@@ -96,7 +96,7 @@ peak_path_analysis = True
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    ab_tag = "cip"
+    ab_tag = "gen"
     db_paths = [f"dataset-space/sk320{ab_tag}/sk320{ab_tag}0min.db", 
                 f"dataset-space/sk320{ab_tag}/sk320{ab_tag}30min.db", 
                 f"dataset-space/sk320{ab_tag}/sk320{ab_tag}60min.db",
