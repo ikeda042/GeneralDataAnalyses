@@ -2,15 +2,19 @@ from Cell import Cells
 import numpy as np
 from umap_analysis import cluster_analysis
 from combine_images import combine_images_function
-from migration import extract_1, extract_NA
+from migration import extract_1, extract_NA, extract_1_from_dbconsole
 
-# dbのパス(sqlite3、PhenoPixelから出力したデータベース)
-db_path = "demo-dataset/cell.db"
+# dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
+db_path = "sk320cip/sk320cip0min.db"
 
-# db　migration
-# Migration.pyを参照
+# db　migration Migration.pyを参照
+
+# PhenoPixelから出力したデータベースの場合は以下のマイグレーションを実行
 # extract_NA(db_path)
 # extract_1(db_path)
+
+#CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
+extract_1_from_dbconsole(db_path)
 
 cells: Cells = Cells(db_path=f"{db_path.split(".")[0]}.db",only_ph=True)
 
