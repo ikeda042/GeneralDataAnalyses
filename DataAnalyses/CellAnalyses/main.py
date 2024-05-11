@@ -95,4 +95,8 @@ extract_1_from_dbconsole(db_path)
 ##########################################################################################################################################################################
 
 # CellAnalysesを実行
-analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
+if __name__ == "__main__":
+    db_paths = ["dataset-space/sk320cip/sk320cip0min.db", "dataset-space/sk320cip/sk320cip30min.db", "dataset-space/sk320cip/sk320cip60min.db", "dataset-space/sk320cip/sk320cip90min.db", "dataset-space/sk320cip/sk320cip120min.db"]
+    for db_path in db_paths: 
+        extract_1_from_dbconsole(db_path)
+        analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)

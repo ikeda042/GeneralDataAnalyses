@@ -351,7 +351,7 @@ class Cell:
             if dir is not None:
                 if not os.path.exists(f"{dir}/replot"):
                     os.makedirs(f"{dir}/replot")
-                plt.savefig(f"{dir}/replot/{self.cell_id}_replot.png")
+            plt.savefig(f"{dir}/replot/{self.cell_id}_replot.png")
             plt.close(fig)
 
             path_raw:list[Point] = self._find_path(self.cell_id, u1, u2, theta, points_inside_cell_1)
