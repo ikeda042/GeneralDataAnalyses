@@ -8,14 +8,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import cv2
 import matplotlib.pyplot as plt
-
 plt.style.use("dark_background")
 from scipy.optimize import minimize
 from scipy.linalg import eig
 import os
 from dataclasses import dataclass
 import shutil
-
 
 @dataclass
 class Point:
@@ -34,9 +32,7 @@ class Point:
 
 
 class Cells:
-    def __init__(
-        self, db_path: str = "database_sk326.db", only_ph: bool = False
-    ) -> None:
+    def __init__(self, db_path: str = "database_sk326.db",only_ph: bool=False) -> None:
         Base = declarative_base()
 
         class Cell_(Base):
@@ -44,7 +40,7 @@ class Cells:
             id = Column(Integer, primary_key=True)
             cell_id = Column(String)
             img_ph = Column(BLOB)
-            img_fluo1 = Column(BLOB, nullable=True)
+            img_fluo1 = Column(BLOB,nullable=True)
             contour = Column(BLOB)
 
         engine: create_engine = create_engine(f"sqlite:///{db_path}")
@@ -53,21 +49,18 @@ class Cells:
         session = Session()
         cells: list[Cell_] = session.query(Cell_).all()
         print("Loading cells from database...")
+        cells.sort(key=lambda c: c.cell_id)
         self.cells: list[Cell] = [
             Cell(
                 cell.cell_id,
                 image_ph=cv2.imdecode(
                     np.frombuffer(cell.img_ph, dtype=np.uint8), cv2.IMREAD_COLOR
                 ),
-                image_fluo=(
-                    cv2.imdecode(
-                        np.frombuffer(cell.img_fluo1, dtype=np.uint8), cv2.IMREAD_COLOR
-                    )
-                    if cell.img_fluo1 is not None
-                    else None
-                ),
+                image_fluo=cv2.imdecode(
+                    np.frombuffer(cell.img_fluo1, dtype=np.uint8), cv2.IMREAD_COLOR
+                ) if cell.img_fluo1 is not None else None,
                 contour=cell.contour,
-                only_ph=only_ph,
+                only_ph=only_ph
             )
             for cell in cells
         ]
@@ -138,7 +131,7 @@ class Cell:
     def __repr__(self) -> str:
         return f"Cell ID: {self.cell_id}"
 
-    def write_image(self, only_ph: bool, out_dir: str | None = None) -> None:
+    def write_image(self, only_ph: bool, out_dir : str | None = None) -> None:
         if out_dir is None:
             out_name_ph: str = f"{self.dir_ph}/{self.cell_id}_ph.png"
             out_name_fluo: str = f"{self.dir_fluo}/{self.cell_id}_fluo.png"
@@ -168,17 +161,15 @@ class Cell:
 
     def get_image_fluo(self) -> np.ndarray:
         return self.image_fluo
-
+    
     def replot_contour(self) -> np.ndarray:
         print(pickle.loads(self.contour))
         contour = [list(i[0]) for i in pickle.loads(self.contour)]
 
-        X = np.array(
-            [
-                [i[1] for i in contour],
-                [i[0] for i in contour],
-            ]
-        )
+        X = np.array([
+            [i[1] for i in contour],
+            [i[0] for i in contour],
+        ])
         print(X)
 
         # 基本変換関数を呼び出して必要な変数を取得
@@ -208,7 +199,7 @@ class Cell:
         # 描画
         fig = plt.figure(figsize=(6, 6))
         plt.scatter(u1_adj, u2_adj, s=5, color="lime")
-        plt.scatter(0, 0, color="red", s=100)
+        plt.scatter(0, 0, color="red", s=100)  
         plt.axis("equal")
 
         margin_width = 10
@@ -217,10 +208,11 @@ class Cell:
         plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
 
         x = np.linspace(min(u1_adj), max(u1_adj), 1000)
-        theta = self._poly_fit(np.array([u1_adj, u2_adj]).T)
+        theta = self._poly_fit(np.array([u1_adj, u2_adj]).T) 
         y = np.polyval(theta, x)
         plt.plot(x, y, color="red")
-
+        plt.xlabel("u1")
+        plt.ylabel("u2")
         plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
         plt.savefig("realtime_replot.png")
         plt.close(fig)
@@ -230,9 +222,9 @@ class Cell:
         cell_height = max(u2_adj) - min(u2_adj)
         area = cv2.contourArea(np.array(contour))
         volume = 0
-
+        
         # 細胞を長軸ベースに細分化
-
+        
         # deltaL = 1
         # split_num = int(cell_length // deltaL)
 
@@ -240,7 +232,7 @@ class Cell:
         deltaL = cell_length / split_num
         print(f"Cell length: {cell_length}, Cell height: {cell_height}")
         # u_2をすべて正にする
-        fig_volume = plt.figure(figsize=(6, 6))
+        fig_volume = plt.figure(figsize=(6,6))
         u_2_abs = [abs(i) for i in u2_adj]
 
         plt.scatter(u1_adj, u_2_abs, s=5, color="lime")
@@ -255,17 +247,11 @@ class Cell:
         # plt.plot(x, y, color="red")
 
         # deltaLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
-        points_init = [
-            p
-            for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-            if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL
-        ]
-
+        points_init = [p for p in [[i,j] for i,j in zip(u1_adj,u_2_abs)] if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL]
+        
         # 区間中のyの平均値を求める
         y_mean = sum([i[1] for i in points_init]) / len(points_init)
-        plt.scatter(
-            (min(u1_adj) + min(u1_adj + deltaL)) / 2, y_mean, color="magenta", s=20
-        )
+        plt.scatter((min(u1_adj) + min(u1_adj + deltaL))/2, y_mean, color="magenta", s=20)
         plt.plot([min(u1_adj), min(u1_adj)], [0, y_mean], color="lime")
 
         # 円柱ポリゴンの定義
@@ -276,11 +262,7 @@ class Cell:
         for i in range(1, split_num):
             x_0 = min(u1_adj) + i * deltaL
             x_1 = min(u1_adj) + (i + 1) * deltaL
-            points = [
-                p
-                for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-                if x_0 <= p[0] <= x_1
-            ]
+            points = [p for p in [[i,j] for i,j in zip(u1_adj,u_2_abs)] if x_0 <= p[0] <= x_1]
             print(points)
             if len(points) == 0:
                 # 前の点を使う
@@ -288,32 +270,28 @@ class Cell:
             else:
                 # 区間中のyの平均値を求める
                 y_mean = sum([i[1] for i in points]) / len(points)
-            plt.scatter(((x_0) + (x_1)) / 2, y_mean, color="magenta", s=20)
-            plt.plot([x_0, x_0], [0, y_mean], color="lime")
+            plt.scatter(((x_0 ) + (x_1))/2, y_mean, color="magenta", s=20)
+            plt.plot([x_0,x_0], [0, y_mean], color="lime")
 
-            volume += y_mean**2 * np.pi * deltaL
+            volume += y_mean**2*np.pi * deltaL
 
-            cylinders.append((x_0, deltaL, y_mean, "lime", 0.6))
+            cylinders.append((x_0,deltaL, y_mean, 'lime', 0.3))
 
             widths.append(y_mean)
-
-        plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
+        
+        plt.xlabel("u1")
+        plt.ylabel("u2")
+        plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png",dpi = 300)
         plt.close(fig_volume)
-        Cell.plot_cylinders(
-            cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
-        )
+        Cell._plot_cylinders(cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png")
 
         # width はwidthsの大きい順から3つの平均値を取る
-        widths = sorted(widths, reverse=True)
+        widths = sorted(widths,reverse=True)
         widths = widths[:3]
         width = sum(widths) / len(widths)
         return area, volume, width
 
-    def replot(
-        self,
-        calc_path: bool,
-        dir: str | None = None,
-    ) -> np.ndarray:
+    def replot(self,calc_path:bool, dir : str | None = None,) -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
 
         cv2.fillPoly(mask, [pickle.loads(self.contour)], 255)
@@ -379,12 +357,11 @@ class Cell:
             plt.savefig(f"{dir}/replot/{self.cell_id}_replot.png")
         plt.close(fig)
         if calc_path:
-            path_raw: list[Point] = self._find_path(
-                self.cell_id, u1, u2, theta, points_inside_cell_1
-            )
+            path_raw:list[Point] = self._find_path(self.cell_id, u1, u2, theta, points_inside_cell_1)
             path = [i.G for i in path_raw]
             return [(i - min(path)) / (max(path) - min(path)) for i in path]
         return []
+
 
     @staticmethod
     def _basis_conversion(
@@ -429,7 +406,7 @@ class Cell:
         f_values = np.array([i[0] for i in U])
         W = np.vander(u1_values, degree + 1)
 
-        theta = inv(W.T @ W) @ W.T @ f_values
+        theta = inv(W.T@ W) @ W.T @ f_values
         # print(theta)
         return theta
 
@@ -476,13 +453,13 @@ class Cell:
 
         ### peak-path finder
         ### Meta parameters
-        split_num: int = 35
-        delta_L: float = (max(u1) - min(u1)) / split_num
-        visualize: bool = True
+        split_num : int = 35
+        delta_L : float = (max(u1) - min(u1)) / split_num
+        visualize : bool= True
 
-        first_point: Point = raw_points[0]
-        last_point: Point = raw_points[-1]
-        path: list[Point] = [first_point]
+        first_point : Point = raw_points[0]
+        last_point : Point = raw_points[-1]
+        path : list[Point] = [first_point]
         for i in range(1, int(split_num)):
             x_0 = min(u1) + i * delta_L
             x_1 = min(u1) + (i + 1) * delta_L
@@ -499,7 +476,7 @@ class Cell:
                 [i.u1 for i in raw_points],
                 [i.G for i in raw_points],
                 s=10,
-                color="lime",
+                color="lime"
             )
             plt.scatter(
                 [i.u1 for i in path],
@@ -514,9 +491,9 @@ class Cell:
             fig.savefig("realtime_path.png")
             plt.close(fig)
         return path
-
+    
     @staticmethod
-    def plot_cylinders(cylinders, out_path: str, resolution=50):
+    def _plot_cylinders(cylinders, out_path:str, resolution=50):
         """
         指定されたパラメータリストで複数のx軸に平行な円柱を描画する関数。
 
@@ -526,15 +503,15 @@ class Cell:
             resolution (int): グリッドの解像度。
 
         使用例:
-        cylinder_params = [
-            (0, 5, 1, 'lime', 0.6),
-            (6, 3, 0.5, 'lime', 0.8),
-            (-4, 2, 2, 'lime', 0.5)
-        ]
-        plot_cylinders(cylinder_params)
+            cylinder_params = [
+                (0, 5, 1, 'lime', 0.6),
+                (6, 3, 0.5, 'lime', 0.8),
+                (-4, 2, 2, 'lime', 0.5)
+            ]
+            plot_cylinders(cylinder_params)
         """
         fig = plt.figure(figsize=(6, 6))
-        ax = fig.add_subplot(111, projection="3d")
+        ax = fig.add_subplot(111, projection='3d')
 
         for start_x, height, radius, color, alpha in cylinders:
             # 円柱のパラメトリックな表現
@@ -552,23 +529,30 @@ class Cell:
             y = radius * np.cos(theta)
             z = radius * np.sin(theta)
             ax.plot(start_x * np.ones_like(theta), y, z, color=color, alpha=alpha)
-            ax.plot(
-                (start_x + height) * np.ones_like(theta), y, z, color=color, alpha=alpha
-            )
+            ax.plot((start_x + height) * np.ones_like(theta), y, z, color=color, alpha=alpha)
 
+            # 円柱の中心線を描画
+            x = np.linspace(start_x, start_x + height, resolution)
+            y = np.zeros_like(x)
+            z = np.zeros_like(x)
+            ax.plot(x, y, z,color="red")
+
+
+            
         # 軸の設定
-        ax.set_xlabel("L")
-        ax.set_ylabel("Y")
-        ax.set_zlabel("Z")
+        ax.set_xlabel('u1')
+        ax.set_ylabel('u2')
+        ax.set_zlabel('Z')
 
         # 目盛りのスケールを揃える
         max_range = max([abs(i[0]) for i in cylinders]) + max([i[1] for i in cylinders])
         ax.set_xlim(-max_range, max_range)
         ax.set_ylim(-max_range, max_range)
         ax.set_zlim(-max_range, max_range)
+        
 
         # グラフの余白を削除
         plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
-
-        fig.savefig(out_path, dpi=400)
+        
+        fig.savefig(out_path,dpi=400)
         plt.close(fig)
