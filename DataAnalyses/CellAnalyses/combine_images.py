@@ -8,7 +8,7 @@ def combine_images_function(
     image_size,
     out_name: str,
     input_dir: str,
-):  
+):
     file_names = sorted(os.listdir(input_dir))
     num_images = len(file_names)
     total_rows = int(np.sqrt(num_images)) + 1
@@ -21,7 +21,9 @@ def combine_images_function(
         for j in range(total_cols):
             image_index = i * total_cols + j  # 画像のインデックス
             if image_index < num_images:
-                image_path = f"{input_dir}/{file_names[image_index]}"  # 画像のパスを適切に設定
+                image_path = (
+                    f"{input_dir}/{file_names[image_index]}"  # 画像のパスを適切に設定
+                )
                 print(image_path)
                 # 画像を読み込んでリサイズ
                 img = cv2.imread(image_path)
