@@ -7,6 +7,7 @@ from migration import extract_1, extract_NA, extract_1_from_dbconsole
 ##########################################################################################################################################################################
 # dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
 db_path = "sk320cip/sk320cip0min.db"
+
 # 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
 only_ph = False
 
@@ -73,8 +74,6 @@ if peak_path_analysis:
             else:
                 print(f"cell_id: {cell_id} is too short path.")
     cluster_analysis(f"{db_path.split(".")[0]}_paths.txt", cells)
-
-
 
 # 画像の結合
 try:
