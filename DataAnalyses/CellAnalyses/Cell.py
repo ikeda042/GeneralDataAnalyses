@@ -291,7 +291,7 @@ class Cell:
         width = sum(widths) / len(widths)
         return area, volume, width
 
-    def replot(self,calc_path:bool, dir : str | None = None,) -> np.ndarray:
+    def replot(self,calc_path:bool, degree:int, dir : str | None = None) -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
 
         cv2.fillPoly(mask, [pickle.loads(self.contour)], 255)
@@ -345,7 +345,7 @@ class Cell:
         plt.ylim([min(u2) - margin_height, max(u2) + margin_height])
 
         x = np.linspace(min_u1, max_u1, 1000)
-        theta = self._poly_fit(U)
+        theta = self._poly_fit(U, degree=degree)
         y = np.polyval(theta, x)
         plt.plot(x, y, color="red")
         plt.scatter(u1_contour, u2_contour, color="lime", s=3)
