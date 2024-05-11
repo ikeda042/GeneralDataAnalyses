@@ -6,7 +6,7 @@ from migration import extract_1, extract_NA, extract_1_from_dbconsole
 
 ##########################################################################################################################################################################
 # dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
-db_path = "sk320cip/sk320cip0min.db"
+db_path = "dataset-space/sk320cip/sk320cip0min.db"
 
 # 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
 only_ph = False
