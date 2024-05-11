@@ -297,9 +297,7 @@ class Cell:
         cv2.fillPoly(mask, [pickle.loads(self.contour)], 255)
 
         coords_inside_cell_1 = np.column_stack(np.where(mask))
-        points_inside_cell_1 = []
-        for i in coords_inside_cell_1:
-            points_inside_cell_1.append(self.image_fluo_gray[i[0], i[1]])
+        points_inside_cell_1 = self.image_fluo_gray[coords_inside_cell_1[:, 0], coords_inside_cell_1[:, 1]]
 
         X = np.array(
             [
@@ -307,56 +305,55 @@ class Cell:
                 [i[0] for i in coords_inside_cell_1],
             ]
         )
-        # print(X)
-        (
-            u1,
-            u2,
-            u1_contour,
-            u2_contour,
-            min_u1,
-            max_u1,
-            u1_c,
-            u2_c,
-            U,
-            contour_U,
-        ) = self._basis_conversion(
-            [list(i[0]) for i in pickle.loads(self.contour)],
-            X,
-            self.image_fluo.shape[0] / 2,
-            self.image_fluo.shape[1] / 2,
-            coords_inside_cell_1,
-        )
 
-        fig = plt.figure(figsize=(6, 6))
-        plt.scatter(u1, u2, s=5)
-        plt.scatter(u1_c, u2_c, color="red", s=100)
-        plt.axis("equal")
-        margin_width = 50
-        margin_height = 50
-        plt.scatter(
-            [i[1] for i in U],
-            [i[0] for i in U],
-            points_inside_cell_1,
-            c=points_inside_cell_1,
-            cmap="inferno",
-            marker="o",
-        )
-        plt.xlim([min_u1 - margin_width, max_u1 + margin_width])
-        plt.ylim([min(u2) - margin_height, max(u2) + margin_height])
-
-        x = np.linspace(min_u1, max_u1, 1000)
-        theta = self._poly_fit(U, degree=degree)
-        y = np.polyval(theta, x)
-        plt.plot(x, y, color="red")
-        plt.scatter(u1_contour, u2_contour, color="lime", s=3)
-        plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
-        plt.savefig(f"realtime_replot.png")
-        if dir is not None:
-            if not os.path.exists(f"{dir}/replot"):
-                os.makedirs(f"{dir}/replot")
-            plt.savefig(f"{dir}/replot/{self.cell_id}_replot.png")
-        plt.close(fig)
         if calc_path:
+            (
+                u1,
+                u2,
+                u1_contour,
+                u2_contour,
+                min_u1,
+                max_u1,
+                u1_c,
+                u2_c,
+                U,
+                contour_U,
+            ) = self._basis_conversion(
+                [list(i[0]) for i in pickle.loads(self.contour)],
+                X,
+                self.image_fluo.shape[0] / 2,
+                self.image_fluo.shape[1] / 2,
+                coords_inside_cell_1,
+            )
+
+            fig = plt.figure(figsize=(6, 6))
+            plt.scatter(u1, u2, s=5)
+            plt.scatter(u1_c, u2_c, color="red", s=100)
+            plt.axis("equal")
+            margin_width = 50
+            margin_height = 50
+            plt.scatter(
+                [i[1] for i in U],
+                [i[0] for i in U],
+                points_inside_cell_1,
+                c=points_inside_cell_1,
+                cmap="inferno",
+                marker="o",
+            )
+            plt.xlim([min_u1 - margin_width, max_u1 + margin_width])
+            plt.ylim([min(u2) - margin_height, max(u2) + margin_height])
+
+            x = np.linspace(min_u1, max_u1, 1000)
+            theta = self._poly_fit(U, degree=degree)
+            y = np.polyval(theta, x)
+            plt.plot(x, y, color="red")
+            plt.scatter(u1_contour, u2_contour, color="lime", s=3)
+            if dir is not None:
+                if not os.path.exists(f"{dir}/replot"):
+                    os.makedirs(f"{dir}/replot")
+                plt.savefig(f"{dir}/replot/{self.cell_id}_replot.png")
+            plt.close(fig)
+
             path_raw:list[Point] = self._find_path(self.cell_id, u1, u2, theta, points_inside_cell_1)
             path = [i.G for i in path_raw]
             return [(i - min(path)) / (max(path) - min(path)) for i in path]
