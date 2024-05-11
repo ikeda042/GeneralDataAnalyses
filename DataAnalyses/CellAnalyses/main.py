@@ -73,7 +73,7 @@ if peak_path_analysis:
                 fpout.write(f"{cell_id}|{'.'.join(path)}\n")
             else:
                 print(f"cell_id: {cell_id} is too short path.")
-    cluster_analysis(f"{db_path.split(".")[0]}_paths.txt", cells)
+    # cluster_analysis(f"{db_path.split(".")[0]}_paths.txt", cells)
 
 # 画像の結合
 try:
