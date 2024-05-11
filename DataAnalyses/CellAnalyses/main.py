@@ -3,6 +3,7 @@ import numpy as np
 from umap_analysis import cluster_analysis
 from combine_images import combine_images_function
 from migration import extract_1, extract_NA, extract_1_from_dbconsole
+from tqdm import tqdm
 
 ##########################################################################################################################################################################
 # dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
@@ -39,7 +40,7 @@ widths = []
 # peak-path 解析用のpath保持
 paths = []
 
-for cell in cells.get_cells():
+for cell in tqdm(cells.get_cells()):
     # PHのみのモードと蛍光二重レイヤを選択するs
     cell.write_image(only_ph=only_ph)
     cell_ids.append(cell.cell_id)
