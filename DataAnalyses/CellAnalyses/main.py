@@ -96,11 +96,13 @@ peak_path_analysis = True
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    db_paths = ["dataset-space/sk320cip/sk320cip0min.db", 
-                "dataset-space/sk320cip/sk320cip30min.db", 
-                "dataset-space/sk320cip/sk320cip60min.db",
-                  "dataset-space/sk320cip/sk320cip90min.db",
-                    "dataset-space/sk320cip/sk320cip120min.db"]
+    ab_tag = "cip"
+    db_paths = [f"dataset-space/sk320{ab_tag}/sk320{ab_tag}0min.db", 
+                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}30min.db", 
+                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}60min.db",
+                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}90min.db",
+                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}120min.db",
+                ]
     for db_path in db_paths: 
         extract_1_from_dbconsole(db_path)
         analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
