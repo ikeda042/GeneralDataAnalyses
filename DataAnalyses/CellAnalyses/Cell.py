@@ -291,7 +291,7 @@ class Cell:
         width = sum(widths) / len(widths)
         return area, volume, width
 
-    def replot(self,calc_path:bool, degree:int, dir : str | None = None) -> np.ndarray:
+    def replot(self,calc_path:bool, degree:int, dir : str = "images") -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
 
         cv2.fillPoly(mask, [pickle.loads(self.contour)], 255)
