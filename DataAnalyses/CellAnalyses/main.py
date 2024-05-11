@@ -91,12 +91,16 @@ peak_path_analysis = True
 # extract_1(db_path)
 
 #CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
-extract_1_from_dbconsole(db_path)
+# extract_1_from_dbconsole(db_path)
 ##########################################################################################################################################################################
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    db_paths = ["dataset-space/sk320cip/sk320cip0min.db", "dataset-space/sk320cip/sk320cip30min.db", "dataset-space/sk320cip/sk320cip60min.db", "dataset-space/sk320cip/sk320cip90min.db", "dataset-space/sk320cip/sk320cip120min.db"]
+    db_paths = ["dataset-space/sk320cip/sk320cip0min.db", 
+                "dataset-space/sk320cip/sk320cip30min.db", 
+                "dataset-space/sk320cip/sk320cip60min.db",
+                  "dataset-space/sk320cip/sk320cip90min.db",
+                    "dataset-space/sk320cip/sk320cip120min.db"]
     for db_path in db_paths: 
         extract_1_from_dbconsole(db_path)
         analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
