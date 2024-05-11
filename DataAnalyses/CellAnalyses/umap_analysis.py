@@ -1,15 +1,17 @@
 import umap
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-import os 
+import os
 import shutil
 from combine_images import combine_images_function
 from Cell import Cells
+
 
 class PeakPath:
     def __init__(self, cell_id: str, path: list[float]):
         self.cell_id = cell_id
         self.path = path
+
 
 def localization_clustering(filename: str):
     with open(filename, "r") as fp:
@@ -18,7 +20,7 @@ def localization_clustering(filename: str):
         for line in lines:
             cell_id, path = line.strip().split("|")
             path = [float(i) for i in path.split(",")]
-            if len(path) > 20: 
+            if len(path) > 20:
                 paths.append(PeakPath(cell_id, path))
 
     # UMAPを使用してデータを低次元に変換
@@ -30,13 +32,13 @@ def localization_clustering(filename: str):
 
     # クラスタリングの結果を可視化
     plt.scatter(embedding[:, 0], embedding[:, 1], c=kmeans.labels_, s=30)
-    plt.title('2D Embedding by UMAP')
-    plt.xlabel('Component 1')
-    plt.ylabel('Component 2')
+    plt.title("2D Embedding by UMAP")
+    plt.xlabel("Component 1")
+    plt.ylabel("Component 2")
     plt.colorbar()
     plt.savefig("umap.png", dpi=500)
 
-    clusters = {label: [] for label in  set(kmeans.labels_)}
+    clusters = {label: [] for label in set(kmeans.labels_)}
 
     # 各cell_idとそのクラスター番号を出力
     for path, label in zip(paths, kmeans.labels_):
@@ -45,18 +47,17 @@ def localization_clustering(filename: str):
     return clusters
 
 
-def cluster_analysis(paths_file:str, cells: Cells) -> None:
+def cluster_analysis(paths_file: str, cells: Cells) -> None:
     clusters = localization_clustering(paths_file)
     for cluster in clusters:
         if not os.path.exists(f"cluster_{cluster}"):
             os.mkdir(f"cluster_{cluster}")
         else:
             for file in os.listdir(f"cluster_{cluster}"):
-                shutil.rmtree(f"cluster_{cluster}/{file}")  
+                shutil.rmtree(f"cluster_{cluster}/{file}")
         cell_ids = clusters[cluster]
         for cell_id in cell_ids:
             cell = cells.get_cell(cell_id)
             cell.write_image(f"cluster_{cluster}")
-            cell.replot(dir = f"cluster_{cluster}",calc_path = False)
+            cell.replot(dir=f"cluster_{cluster}", calc_path=False)
         combine_images_function(200, f"cluster_{cluster}", f"cluster_{cluster}/replot")
-        
