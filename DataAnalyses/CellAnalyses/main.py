@@ -95,6 +95,10 @@ try:
     combine_images_function(500, f"{db_path.split(".")[0]}_images_cylinders", "images/cylinders")
 except:
     print("No images/cylinders directory")
+try:
+    combine_images_function(500, f"{db_path.split(".")[0]}_images_paths", "images/path")
+except:
+    print("No images/contour directory")
 
 
 
