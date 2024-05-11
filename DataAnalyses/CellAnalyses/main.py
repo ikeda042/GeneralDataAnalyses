@@ -5,29 +5,6 @@ from combine_images import combine_images_function
 from migration import extract_1, extract_NA, extract_1_from_dbconsole
 from tqdm import tqdm
 
-##########################################################################################################################################################################
-# dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
-db_path = "dataset-space/sk320cip/sk320cip0min.db"
-
-# 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
-only_ph = False
-
-# 形態解析を行う場合はTrue、行わない場合はFalse
-morphology_analysis = False
-
-# peak-path解析を行う場合はTrue、行わない場合はFalse
-peak_path_analysis = True
-
-
-##########################################################################################################################################################################
-# db　migration Migration.pyを参照
-# PhenoPixelから出力したデータベースの場合は以下のマイグレーションを実行
-# extract_NA(db_path)
-# extract_1(db_path)
-
-#CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
-extract_1_from_dbconsole(db_path)
-##########################################################################################################################################################################
 def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: bool, only_ph: bool):
     cells: Cells = Cells(db_path=f"{db_path.split('.')[0]}.db", only_ph=only_ph)
 
@@ -93,3 +70,26 @@ def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: b
 
 
 
+##########################################################################################################################################################################
+# dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
+db_path = "dataset-space/sk320cip/sk320cip0min.db"
+
+# 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
+only_ph = False
+
+# 形態解析を行う場合はTrue、行わない場合はFalse
+morphology_analysis = False
+
+# peak-path解析を行う場合はTrue、行わない場合はFalse
+peak_path_analysis = True
+
+
+##########################################################################################################################################################################
+# db　migration Migration.pyを参照
+# PhenoPixelから出力したデータベースの場合は以下のマイグレーションを実行
+# extract_NA(db_path)
+# extract_1(db_path)
+
+#CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
+extract_1_from_dbconsole(db_path)
+##########################################################################################################################################################################
