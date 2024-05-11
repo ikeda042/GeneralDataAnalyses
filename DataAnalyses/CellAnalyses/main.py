@@ -93,3 +93,6 @@ peak_path_analysis = True
 #CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
 extract_1_from_dbconsole(db_path)
 ##########################################################################################################################################################################
+
+# CellAnalysesを実行
+analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
