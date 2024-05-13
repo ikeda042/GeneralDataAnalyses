@@ -5,7 +5,10 @@ from combine_images import combine_images_function
 from migration import extract_1, extract_NA, extract_1_from_dbconsole
 from tqdm import tqdm
 
-def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: bool, only_ph: bool):
+
+def analyze_cells(
+    db_path: str, morphology_analysis: bool, peak_path_analysis: bool, only_ph: bool
+):
     cells: Cells = Cells(db_path=f"{db_path.split('.')[0]}.db", only_ph=only_ph)
 
     cell_ids = []
@@ -23,7 +26,7 @@ def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: b
             areas.append(area)
             volumes.append(volume)
             widths.append(width)
-        
+
         if peak_path_analysis:
             path: list[float] = cell.replot(calc_path=True, degree=4)
             paths.append(path)
@@ -37,7 +40,7 @@ def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: b
 
     if peak_path_analysis:
         with open(f"{db_path.split('.')[0]}_paths.txt", "w") as fpout:
-            for path,cell_id in zip(paths, cell_ids):
+            for path, cell_id in zip(paths, cell_ids):
                 if len(path) > 20:
                     fpout.write(f"{cell_id}|{','.join([str(i) for i in path])}\n")
                 else:
@@ -49,25 +52,32 @@ def analyze_cells(db_path: str, morphology_analysis: bool, peak_path_analysis: b
         print("No images/ph directory")
 
     try:
-        combine_images_function(200, f"{db_path.split('.')[0]}_images_replot", "images/replot")
+        combine_images_function(
+            200, f"{db_path.split('.')[0]}_images_replot", "images/replot"
+        )
     except:
         print("No images/replot directory")
 
     try:
-        combine_images_function(500, f"{db_path.split('.')[0]}_images_volume", "images/volume")
+        combine_images_function(
+            500, f"{db_path.split('.')[0]}_images_volume", "images/volume"
+        )
     except:
         print("No images/volume directory")
 
     try:
-        combine_images_function(500, f"{db_path.split('.')[0]}_images_cylinders", "images/cylinders")
+        combine_images_function(
+            500, f"{db_path.split('.')[0]}_images_cylinders", "images/cylinders"
+        )
     except:
         print("No images/cylinders directory")
 
     try:
-        combine_images_function(500, f"{db_path.split('.')[0]}_images_paths", "images/path")
+        combine_images_function(
+            500, f"{db_path.split('.')[0]}_images_paths", "images/path"
+        )
     except:
         print("No images/contour directory")
-
 
 
 ##########################################################################################################################################################################
@@ -90,19 +100,20 @@ peak_path_analysis = True
 # extract_NA(db_path)
 # extract_1(db_path)
 
-#CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
+# CEll db consoleからダウンロードしたデータベースの場合は以下のマイグレーションを実行
 # extract_1_from_dbconsole(db_path)
 ##########################################################################################################################################################################
 
 # CellAnalysesを実行
 if __name__ == "__main__":
     ab_tag = "gen"
-    db_paths = [f"dataset-space/sk320{ab_tag}/sk320{ab_tag}0min.db", 
-                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}30min.db", 
-                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}60min.db",
-                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}90min.db",
-                f"dataset-space/sk320{ab_tag}/sk320{ab_tag}120min.db",
-                ]
-    for db_path in db_paths: 
+    db_paths = [
+        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}0min.db",
+        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}30min.db",
+        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}60min.db",
+        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}90min.db",
+        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}120min.db",
+    ]
+    for db_path in db_paths:
         extract_1_from_dbconsole(db_path)
         analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
