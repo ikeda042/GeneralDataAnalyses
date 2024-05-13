@@ -82,13 +82,13 @@ def analyze_cells(
 
 ##########################################################################################################################################################################
 # dbのパス(sqlite3、PhenoPixelから出力したデータベースもしくはCEll db consoleからダウンロードしたデータベース)
-db_path = "demo-dataset/cell.db"
+db_path = "DataAnalyses/CellAnalyses/demo-dataset/cell.db"
 
 # 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
 only_ph = False
 
 # 形態解析を行う場合はTrue、行わない場合はFalse
-morphology_analysis = False
+morphology_analysis = True
 
 # peak-path解析を行う場合はTrue、行わない場合はFalse
 peak_path_analysis = True
@@ -106,14 +106,4 @@ peak_path_analysis = True
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    ab_tag = "gen"
-    db_paths = [
-        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}0min.db",
-        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}30min.db",
-        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}60min.db",
-        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}90min.db",
-        f"dataset-space/sk320{ab_tag}/sk320{ab_tag}120min.db",
-    ]
-    for db_path in db_paths:
-        extract_1_from_dbconsole(db_path)
-        analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
+    analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
