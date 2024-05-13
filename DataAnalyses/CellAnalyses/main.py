@@ -15,6 +15,7 @@ def analyze_cells(
     areas = []
     volumes = []
     widths = []
+    lengths = []
     paths = []
 
     for cell in tqdm(cells.get_cells()):
@@ -22,10 +23,11 @@ def analyze_cells(
         cell_ids.append(cell.cell_id)
 
         if morphology_analysis:
-            area, volume, width = cell.replot_contour()
+            area, volume, width, length = cell.replot_contour()
             areas.append(area)
             volumes.append(volume)
             widths.append(width)
+            lengths.append(length)
 
         if peak_path_analysis:
             path: list[float] = cell.replot(calc_path=True, degree=4)
@@ -33,9 +35,9 @@ def analyze_cells(
 
     if morphology_analysis:
         with open(f"{db_path.split('.')[0]}_width_area_volume.csv", "w") as fpout:
-            header = "width(px),area(px^2),volume(px^3)"
+            header = "width(px),length(px),area(px^2),volume(px^3)"
             fpout.write(header + "\n")
-            for w, a, v in zip(widths, areas, volumes):
+            for w, l, a, v in zip(widths, lengths, areas, volumes):
                 fpout.write(f"{w},{a},{v}\n")
 
     if peak_path_analysis:
