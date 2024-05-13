@@ -87,13 +87,13 @@ def analyze_cells(
 db_path = "DataAnalyses/CellAnalyses/demo-dataset/cell.db"
 
 # 位相差モードのみの場合はTrue、蛍光二重レイヤを含む場合はFalse
-only_ph = False
+only_ph = True
 
 # 形態解析を行う場合はTrue、行わない場合はFalse
 morphology_analysis = True
 
 # peak-path解析を行う場合はTrue、行わない場合はFalse
-peak_path_analysis = True
+peak_path_analysis = False
 
 
 ##########################################################################################################################################################################
@@ -108,4 +108,9 @@ peak_path_analysis = True
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
+    for d in [
+        "DataAnalyses/CellAnalyses/dataset-space/SK25_LB_1mL 1.db",
+        "DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 1.db",
+    ]:
+        extract_1(d)
+        analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
