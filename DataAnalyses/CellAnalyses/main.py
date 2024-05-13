@@ -113,4 +113,4 @@ if __name__ == "__main__":
         "DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 1.db",
     ]:
         extract_1(d)
-        analyze_cells(db_path, morphology_analysis, peak_path_analysis, only_ph)
+        analyze_cells(f"{d}", morphology_analysis, peak_path_analysis, only_ph)
