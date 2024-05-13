@@ -311,7 +311,8 @@ class Cell:
         widths = sorted(widths, reverse=True)
         widths = widths[:3]
         width = sum(widths) / len(widths)
-        return area, volume, width
+
+        return (area, volume, width, cell_length)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
