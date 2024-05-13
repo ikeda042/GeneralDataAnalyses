@@ -110,9 +110,5 @@ peak_path_analysis = False
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    for d in [
-        "DataAnalyses/CellAnalyses/dataset-space/SK25_LB_1mL 1.db",
-        "DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 1.db",
-    ]:
-        extract_1(d)
+    for d in ["DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 3_1.db"]:
         analyze_cells(f"{d}", morphology_analysis, peak_path_analysis, only_ph)
