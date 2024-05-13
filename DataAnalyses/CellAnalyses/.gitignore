@@ -2,3 +2,6 @@
 !*.py
 !cell.db
 !.gitignore
+!demo-dataset/
+!dataset-space/
+
