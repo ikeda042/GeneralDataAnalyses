@@ -34,7 +34,9 @@ def analyze_cells(
             paths.append(path)
 
     if morphology_analysis:
-        with open(f"{db_path.split('.')[0]}_width_area_volume.csv", "w") as fpout:
+        with open(
+            f"{db_path.split('.')[0]}_width_length_area_volume.csv", "w"
+        ) as fpout:
             header = "width(px),length(px),area(px^2),volume(px^3)"
             fpout.write(header + "\n")
             for w, l, a, v in zip(widths, lengths, areas, volumes):
