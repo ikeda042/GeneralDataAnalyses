@@ -307,11 +307,13 @@ class Cell:
             cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
         )
 
-        # width はwidthsの大きい順から3つの平均値を取る
+        # width はwidthsの大きい順から3つの平均値を取る。
+        # widthsの各値は、その区間のy座標の平均値である。
+        # この際、区間のy軸方向は細胞の片側の幅を表すため、値を単純に二倍する。
         widths = sorted(widths, reverse=True)
         widths = widths[:3]
         width = sum(widths) / len(widths)
-
+        width *= 2
         return (area, volume, width, cell_length)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
