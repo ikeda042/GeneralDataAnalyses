@@ -40,7 +40,7 @@ def analyze_cells(
             header = "width(px),length(px),area(px^2),volume(px^3)"
             fpout.write(header + "\n")
             for w, l, a, v in zip(widths, lengths, areas, volumes):
-                fpout.write(f"{w},{a},{v}\n")
+                fpout.write(f"{w},{l},{a},{v}\n")
 
     if peak_path_analysis:
         with open(f"{db_path.split('.')[0]}_paths.txt", "w") as fpout:
@@ -110,5 +110,6 @@ peak_path_analysis = False
 
 # CellAnalysesを実行
 if __name__ == "__main__":
-    for d in ["DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 3_1.db"]:
+    extract_1("DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 2.db")
+    for d in ["DataAnalyses/CellAnalyses/dataset-space/SK25_LB_3mL 2_1.db"]:
         analyze_cells(f"{d}", morphology_analysis, peak_path_analysis, only_ph)
