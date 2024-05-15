@@ -334,6 +334,7 @@ class Cell:
             cell_length = Cell._calc_arc_length(theta, min(u1), max(u1))
             area = cv2.contourArea(np.array(contour))
             volume = 0
+            widths = []
 
             # 細胞を長軸ベースに細分化(Meta parameters)
             split_num = 20
@@ -346,6 +347,23 @@ class Cell:
                 )
                 arc_length = Cell._calc_arc_length(theta, min(u1), i)
                 raw_points.append([arc_length, min_distance])
+
+            # raw pointsをソート
+            raw_points.sort(key=lambda x: x[0])
+
+            for i in range(0, split_num):
+                x_0 = i * deltaL
+                x_1 = (i + 1) * deltaL
+                points = [p for p in raw_points if x_0 <= p[0] <= x_1]
+                if len(points) == 0:
+                    # 前の点を使う
+                    y_mean = y_mean
+                else:
+                    # 区間中のyの平均値を求める
+                    y_mean = sum([i[1] for i in points]) / len(points)
+                volume += y_mean**2 * np.pi * deltaL
+
+                widths.append(y_mean)
 
             fig_volume = plt.figure(figsize=(6, 6))
 
