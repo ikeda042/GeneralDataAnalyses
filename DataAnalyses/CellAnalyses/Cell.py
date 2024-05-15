@@ -216,7 +216,6 @@ class Cell:
 
         # 細胞を長軸ベースに細分化(Meta parameters)
         split_num = 20
-        deltaL = cell_length / split_num
 
         if polyfit_degree is None or polyfit_degree == 1:
 
@@ -268,6 +267,9 @@ class Cell:
 
             # 幅を格納
             widths = []
+
+            deltaL = cell_length / split_num
+
             for i in range(0, split_num):
                 x_0 = min(u1_adj) + i * deltaL
                 x_1 = min(u1_adj) + (i + 1) * deltaL
@@ -322,6 +324,26 @@ class Cell:
             area = cv2.contourArea(np.array(contour))
             volume = 0
 
+            fig_volume = plt.figure(figsize=(6, 6))
+
+            raw_points: list[list[float]] = []
+            for i, j in zip(u1, u2):
+                min_distance, min_point = Cell._find_minimum_distance_and_point(
+                    theta, i, j
+                )
+                arc_length = Cell._calc_arc_length(theta, min(u1_adj), i)
+                raw_points.append([arc_length, min_distance])
+
+            plt.scatter(
+                [i[0] for i in raw_points],
+                [i[1] for i in raw_points],
+                s=5,
+                color="lime",
+            )
+            plt.xlabel("arc length")
+            plt.ylabel("distance")
+            plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
+            plt.close(fig_volume)
             return (0, 0, 0, 0)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
@@ -448,8 +470,8 @@ class Cell:
             + sum(i * j * x ** (i - 1) for i, j in enumerate(theta[::-1][1:], start=1))
             ** 2
         )
-        cell_length, _ = scipy.integrate.quad(fx, u_1_1, u_1_2, epsabs=1e-01)
-        return cell_length
+        arc_length, _ = scipy.integrate.quad(fx, u_1_1, u_1_2, epsabs=1e-01)
+        return arc_length
 
     @staticmethod
     def _find_minimum_distance_and_point(coefficients, x_Q, y_Q):
