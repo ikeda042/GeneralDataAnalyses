@@ -235,12 +235,9 @@ class Cell:
 
         # 細胞を長軸ベースに細分化
 
-        # deltaL = 1
-        # split_num = int(cell_length // deltaL)
-
-        split_num = 25
+        split_num = 20
         deltaL = cell_length / split_num
-        print(f"Cell length: {cell_length}, Cell height: {cell_height}")
+
         # u_2をすべて正にする
         fig_volume = plt.figure(figsize=(6, 6))
         u_2_abs = [abs(i) for i in u2_adj]
@@ -254,9 +251,8 @@ class Cell:
         plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
         plt.ylim([min(u_2_abs) - margin_height, max(u_2_abs) + margin_height])
         y = np.polyval(theta, x)
-        # plt.plot(x, y, color="red")
 
-        # deltaLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
+        # 区間ΔLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
         points_init = [
             p
             for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
