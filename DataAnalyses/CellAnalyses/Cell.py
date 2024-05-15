@@ -201,14 +201,14 @@ class Cell:
             contour,
         )
 
-        # 中心座標(u1_c, u2_c)が(0,0)になるように補正
-        u1_adj = u1 - u1_c
-        u2_adj = u2 - u2_c
-
-        # 細胞を長軸ベースに細分化(Meta parameters)
-        split_num = 20
-
         if polyfit_degree is None or polyfit_degree == 1:
+
+            # 中心座標(u1_c, u2_c)が(0,0)になるように補正
+            u1_adj = u1 - u1_c
+            u2_adj = u2 - u2_c
+
+            # 細胞を長軸ベースに細分化(Meta parameters)
+            split_num = 20
 
             fig = plt.figure(figsize=(6, 6))
             plt.scatter(u1, u2, s=5, color="lime")
@@ -233,6 +233,7 @@ class Cell:
             cell_length = max(u1_adj) - min(u1_adj)
             area = cv2.contourArea(np.array(contour))
             volume = 0
+            deltaL = cell_length / split_num
 
             # u_2をすべて正にする
             fig_volume = plt.figure(figsize=(6, 6))
@@ -267,8 +268,6 @@ class Cell:
 
             # 幅を格納
             widths = []
-
-            deltaL = cell_length / split_num
 
             for i in range(0, split_num):
                 x_0 = min(u1_adj) + i * deltaL
