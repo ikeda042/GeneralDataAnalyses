@@ -112,7 +112,7 @@ peak_path_analysis = False
 # CellAnalysesを実行
 if __name__ == "__main__":
     db_paths = [
-        i
+        f"DataAnalyses/CellAnalyses/dataset-space/{i}"
         for i in os.listdir("DataAnalyses/CellAnalyses/dataset-space/")
         if i.endswith(".db")
     ]
