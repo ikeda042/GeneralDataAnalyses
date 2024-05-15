@@ -15,6 +15,7 @@ from scipy.linalg import eig
 import os
 from dataclasses import dataclass
 import shutil
+import scipy.integrate
 
 
 @dataclass
@@ -311,6 +312,14 @@ class Cell:
             x = np.linspace(min(u1_adj), max(u1_adj), 1000)
             theta = self._poly_fit(np.array([u1_adj, u2_adj]).T, degree=polyfit_degree)
             y = np.polyval(theta, x)
+            plt.plot(x, y, color="red")
+            plt.xlabel("u1")
+            plt.ylabel("u2")
+            plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
+            plt.savefig("realtime_replot.png")
+            plt.close(fig)
+
+            cell_length = max(u1_adj) - min(u1_adj)
             return (0, 0, 0, 0)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
@@ -429,6 +438,16 @@ class Cell:
         W = np.vander(u1_values, degree + 1)
 
         return inv(W.T @ W) @ W.T @ f_values
+
+    @staticmethod
+    def calc_arc_length(theta: list[float], u_1_1: float, u_1_2: float) -> float:
+        fx = lambda x: np.sqrt(
+            1
+            + sum(i * j * x ** (i - 1) for i, j in enumerate(theta[::-1][1:], start=1))
+            ** 2
+        )
+        cell_length, _ = scipy.integrate.quad(fx, u_1_1, u_1_2, epsabs=1e-01)
+        return cell_length
 
     @staticmethod
     def _find_minimum_distance_and_point(coefficients, x_Q, y_Q):
