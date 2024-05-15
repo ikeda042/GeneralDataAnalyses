@@ -336,6 +336,8 @@ class Cell:
             volume = 0
             widths = []
 
+            fig_volume = plt.figure(figsize=(6, 6))
+
             # 細胞を長軸ベースに細分化(Meta parameters)
             split_num = 20
             deltaL = cell_length / split_num
@@ -361,11 +363,13 @@ class Cell:
                 else:
                     # 区間中のyの平均値を求める
                     y_mean = sum([i[1] for i in points]) / len(points)
+                plt.scatter(
+                    ((x_0) + (x_1)) / 2, y_mean, color="magenta", s=20, zorder=100
+                )
+                plt.plot([x_0, x_0], [0, y_mean], color="lime")
                 volume += y_mean**2 * np.pi * deltaL
 
                 widths.append(y_mean)
-
-            fig_volume = plt.figure(figsize=(6, 6))
 
             plt.axis("equal")
             plt.scatter(
@@ -374,8 +378,8 @@ class Cell:
                 s=5,
                 color="lime",
             )
-            plt.xlabel("arc length")
-            plt.ylabel("distance")
+            plt.xlabel("Arc length(px)")
+            plt.ylabel("D_i(px)")
             plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
             plt.savefig("realtime_volume.png")
             plt.close(fig_volume)
