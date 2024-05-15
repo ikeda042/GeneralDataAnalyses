@@ -23,7 +23,7 @@ def analyze_cells(
         cell_ids.append(cell.cell_id)
 
         if morphology_analysis:
-            area, volume, width, length = cell.replot_contour(polyfit_degree=1)
+            area, volume, width, length = cell.replot_contour(polyfit_degree=4)
             areas.append(area)
             volumes.append(volume)
             widths.append(width)
