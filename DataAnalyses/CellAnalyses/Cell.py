@@ -310,10 +310,6 @@ class Cell:
             return (area, volume, width, cell_length)
         else:
 
-            # 細胞を長軸ベースに細分化(Meta parameters)
-            split_num = 20
-            deltaL = cell_length / split_num
-
             fig = plt.figure(figsize=(6, 6))
             plt.scatter(u1, u2, s=5, color="lime")
             plt.scatter(u1_c, u2_c, color="red", s=100)
@@ -338,6 +334,10 @@ class Cell:
             cell_length = Cell._calc_arc_length(theta, min(u1), max(u1))
             area = cv2.contourArea(np.array(contour))
             volume = 0
+
+            # 細胞を長軸ベースに細分化(Meta parameters)
+            split_num = 20
+            deltaL = cell_length / split_num
 
             raw_points: list[list[float]] = []
             for i, j in zip(u1, u2):
