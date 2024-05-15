@@ -440,7 +440,7 @@ class Cell:
         return inv(W.T @ W) @ W.T @ f_values
 
     @staticmethod
-    def calc_arc_length(theta: list[float], u_1_1: float, u_1_2: float) -> float:
+    def _calc_arc_length(theta: list[float], u_1_1: float, u_1_2: float) -> float:
         fx = lambda x: np.sqrt(
             1
             + sum(i * j * x ** (i - 1) for i, j in enumerate(theta[::-1][1:], start=1))
