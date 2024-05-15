@@ -427,9 +427,7 @@ class Cell:
         f_values = np.array([i[0] for i in U])
         W = np.vander(u1_values, degree + 1)
 
-        theta = inv(W.T @ W) @ W.T @ f_values
-        # print(theta)
-        return theta
+        return inv(W.T @ W) @ W.T @ f_values
 
     @staticmethod
     def _find_minimum_distance_and_point(coefficients, x_Q, y_Q):
