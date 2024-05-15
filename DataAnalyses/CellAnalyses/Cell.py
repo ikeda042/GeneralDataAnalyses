@@ -214,6 +214,10 @@ class Cell:
         plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
         plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
 
+        # 細胞を長軸ベースに細分化(Meta parameters)
+        split_num = 20
+        deltaL = cell_length / split_num
+
         if polyfit_degree is None or polyfit_degree == 1:
 
             x = np.linspace(min(u1_adj), max(u1_adj), 1000)
@@ -230,11 +234,6 @@ class Cell:
             cell_length = max(u1_adj) - min(u1_adj)
             area = cv2.contourArea(np.array(contour))
             volume = 0
-
-            # 細胞を長軸ベースに細分化
-
-            split_num = 20
-            deltaL = cell_length / split_num
 
             # u_2をすべて正にする
             fig_volume = plt.figure(figsize=(6, 6))
@@ -319,7 +318,10 @@ class Cell:
             plt.savefig("realtime_replot.png")
             plt.close(fig)
 
-            cell_length = max(u1_adj) - min(u1_adj)
+            cell_length = Cell._calc_arc_length(theta, min(u1_adj), max(u1_adj))
+            area = cv2.contourArea(np.array(contour))
+            volume = 0
+
             return (0, 0, 0, 0)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
