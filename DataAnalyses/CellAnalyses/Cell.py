@@ -6,7 +6,6 @@ from numpy.linalg import inv
 from sqlalchemy import create_engine, Column, Integer, String, BLOB
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-import cv2
 import matplotlib.pyplot as plt
 
 plt.style.use("dark_background")
