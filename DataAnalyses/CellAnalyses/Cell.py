@@ -212,7 +212,7 @@ class Cell:
 
             fig = plt.figure(figsize=(6, 6))
             plt.scatter(u1_adj, u2_adj, s=5, color="lime")
-            plt.scatter(u1_c, u2_c, color="red", s=100)
+            plt.scatter(0, 0, color="red", s=100)
             plt.axis("equal")
             margin_width = 10
             margin_height = 10
@@ -318,8 +318,10 @@ class Cell:
             plt.xlim([min(u1) - margin_width, max(u1) + margin_width])
             plt.ylim([min(u2) - margin_height, max(u2) + margin_height])
 
-            x = np.linspace(min(u1), max(u1), 1000)
-            theta = self._poly_fit(np.array([u1, u2]).T, degree=polyfit_degree)
+            x = np.linspace(min(u1), max(u1), 100)
+
+            # 多項式フィッティングの際にu1,u2を入れ替える事に注意
+            theta = self._poly_fit(np.array([u2, u1]).T, degree=polyfit_degree)
             y = np.polyval(theta, x)
             plt.plot(x, y, color="red")
             plt.xlabel("u1")
