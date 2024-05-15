@@ -172,7 +172,6 @@ class Cell:
         return self.image_fluo
 
     def replot_contour(self) -> np.ndarray:
-        print(pickle.loads(self.contour))
         contour = [list(i[0]) for i in pickle.loads(self.contour)]
 
         X = np.array(
@@ -181,7 +180,6 @@ class Cell:
                 [i[0] for i in contour],
             ]
         )
-        print(X)
 
         # 基底変換関数を呼び出して必要な変数を取得
         (
@@ -279,7 +277,6 @@ class Cell:
                 for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
                 if x_0 <= p[0] <= x_1
             ]
-            print(points)
             if len(points) == 0:
                 # 前の点を使う
                 y_mean = y_mean
@@ -311,6 +308,90 @@ class Cell:
         width = sum(widths) / len(widths)
         width *= 2
         return (area, volume, width, cell_length)
+
+    def replot_contour_v2(self) -> np.ndarray:
+        print(pickle.loads(self.contour))
+        contour = [list(i[0]) for i in pickle.loads(self.contour)]
+
+        X = np.array(
+            [
+                [i[1] for i in contour],
+                [i[0] for i in contour],
+            ]
+        )
+        print(X)
+
+        # 基底変換関数を呼び出して必要な変数を取得
+        (
+            u1,
+            u2,
+            u1_contour,
+            u2_contour,
+            min_u1,
+            max_u1,
+            u1_c,
+            u2_c,
+            U,
+            contour_U,
+        ) = self._basis_conversion(
+            contour,
+            X,
+            self.image_ph.shape[0] / 2,
+            self.image_ph.shape[1] / 2,
+            contour,
+        )
+
+        # 中心座標(u1_c, u2_c)が(0,0)になるように補正
+        u1_adj = u1 - u1_c
+        u2_adj = u2 - u2_c
+
+        # 描画
+        fig = plt.figure(figsize=(6, 6))
+        plt.scatter(u1_adj, u2_adj, s=5, color="lime")
+        plt.scatter(0, 0, color="red", s=100)
+        plt.axis("equal")
+
+        margin_width = 10
+        margin_height = 10
+        plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
+        plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
+
+        x = np.linspace(min(u1_adj), max(u1_adj), 1000)
+        theta = self._poly_fit(np.array([u1_adj, u2_adj]).T)
+        y = np.polyval(theta, x)
+        plt.plot(x, y, color="red")
+        plt.xlabel("u1")
+        plt.ylabel("u2")
+        plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
+        plt.savefig("realtime_replot.png")
+        plt.close(fig)
+
+        # 細胞情報の初期化および定義
+        cell_length = max(u1_adj) - min(u1_adj)
+        area = cv2.contourArea(np.array(contour))
+
+        # u2をすべて正にする
+        u2_abs = np.abs(u2_adj)
+
+        # パップスギュルダンの定理を使って体積を計算
+        y_mean = np.mean(u2_abs)
+        volume = 2 * np.pi * y_mean * area
+
+        fig_volume = plt.figure(figsize=(6, 6))
+        plt.scatter(u1_adj, u2_abs, s=5, color="lime")
+        plt.axis("equal")
+
+        margin_width = 10
+        margin_height = 10
+        plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
+        plt.ylim([min(u2_abs) - margin_height, max(u2_abs) + margin_height])
+        y = np.polyval(theta, x)
+        plt.xlabel("u1")
+        plt.ylabel("u2")
+        plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
+        plt.close(fig_volume)
+
+        return (area, volume, y_mean * 2, cell_length)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
