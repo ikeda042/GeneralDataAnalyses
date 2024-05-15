@@ -19,14 +19,14 @@ import scipy.integrate
 
 @dataclass
 class Point:
-    def __init__(self, u1: float, G: float):
+    def __init__(self, u1: float, G: float) -> None:
         self.u1 = u1
         self.G = G
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self.u1 > other.u1
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.u1 < other.u1
 
     def __repr__(self) -> str:
