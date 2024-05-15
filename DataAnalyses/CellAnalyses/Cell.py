@@ -343,6 +343,7 @@ class Cell:
                 raw_points.append([arc_length, min_distance])
 
             fig_volume = plt.figure(figsize=(6, 6))
+            plt.axis("equal")
             plt.scatter(
                 [i[0] for i in raw_points],
                 [i[1] for i in raw_points],
