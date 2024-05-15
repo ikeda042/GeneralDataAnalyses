@@ -4,6 +4,7 @@ from umap_analysis import cluster_analysis
 from combine_images import combine_images_function
 from migration import extract_1, extract_NA, extract_1_from_dbconsole
 from tqdm import tqdm
+import os
 
 
 def analyze_cells(
@@ -111,10 +112,11 @@ peak_path_analysis = False
 # CellAnalysesを実行
 if __name__ == "__main__":
     db_paths = [
-        "DataAnalyses/CellAnalyses/SK25_1_LB_1mL001_Ph.db",
-        "DataAnalyses/CellAnalyses/SK25_2_LB_1mL002_Ph.db",
-        "DataAnalyses/CellAnalyses/SK25_3_LB_1mL003_Ph.db",
+        i
+        for i in os.listdir("DataAnalyses/CellAnalyses/dataset-space/")
+        if i.endswith(".db")
     ]
+    print(db_paths)
     for db_path in db_paths:
         extract_1(db_path)
     for d in [i.split(".")[0] + "_1.db" for i in db_paths]:
