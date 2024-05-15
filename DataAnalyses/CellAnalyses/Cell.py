@@ -228,9 +228,8 @@ class Cell:
         plt.savefig("realtime_replot.png")
         plt.close(fig)
 
-        # 細胞情報の取得
+        # 細胞情報の初期化および定義
         cell_length = max(u1_adj) - min(u1_adj)
-        cell_height = max(u2_adj) - min(u2_adj)
         area = cv2.contourArea(np.array(contour))
         volume = 0
 
