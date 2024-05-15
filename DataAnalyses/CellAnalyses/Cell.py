@@ -352,6 +352,9 @@ class Cell:
             # raw pointsをソート
             raw_points.sort(key=lambda x: x[0])
 
+            # 円柱ポリゴンの定義
+            cylinders = []
+
             for i in range(0, split_num):
                 x_0 = i * deltaL
                 x_1 = (i + 1) * deltaL
@@ -370,6 +373,8 @@ class Cell:
 
                 widths.append(y_mean)
 
+                cylinders.append((x_0, deltaL, y_mean, "lime", 0.3))
+
             plt.axis("equal")
             plt.scatter(
                 [i[0] for i in raw_points],
@@ -382,6 +387,9 @@ class Cell:
             plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
             plt.savefig("realtime_volume.png")
             plt.close(fig_volume)
+            Cell._plot_cylinders(
+                cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
+            )
 
             # width はwidthsの大きい順から3つの平均値を取る。
             # widthsの各値は、その区間のy座標の平均値である。
