@@ -115,7 +115,7 @@ if __name__ == "__main__":
     db_paths = [
         f"DataAnalyses/CellAnalyses/dataset-space/{i}"
         for i in os.listdir("DataAnalyses/CellAnalyses/dataset-space/")
-        if i.endswith(".db")
+        if i.endswith(".db") and not i.endswith("_1.db")
     ]
     print(db_paths)
     for db_path in db_paths:
