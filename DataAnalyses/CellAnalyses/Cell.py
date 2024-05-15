@@ -211,7 +211,7 @@ class Cell:
             split_num = 20
 
             fig = plt.figure(figsize=(6, 6))
-            plt.scatter(u1, u2, s=5, color="lime")
+            plt.scatter(u1_adj, u2_adj, s=5, color="lime")
             plt.scatter(u1_c, u2_c, color="red", s=100)
             plt.axis("equal")
             margin_width = 10
