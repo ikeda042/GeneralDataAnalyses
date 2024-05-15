@@ -15,7 +15,6 @@ from scipy.linalg import eig
 import os
 from dataclasses import dataclass
 import shutil
-from tqdm import tqdm
 
 
 @dataclass
