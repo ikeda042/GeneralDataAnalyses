@@ -209,6 +209,7 @@ class Cell:
 
             # 細胞を長軸ベースに細分化(Meta parameters)
             split_num = 20
+            deltaL = cell_length / split_num
 
             fig = plt.figure(figsize=(6, 6))
             plt.scatter(u1_adj, u2_adj, s=5, color="lime")
@@ -233,7 +234,6 @@ class Cell:
             cell_length = max(u1_adj) - min(u1_adj)
             area = cv2.contourArea(np.array(contour))
             volume = 0
-            deltaL = cell_length / split_num
 
             # u_2をすべて正にする
             fig_volume = plt.figure(figsize=(6, 6))
@@ -309,6 +309,11 @@ class Cell:
             width *= 2
             return (area, volume, width, cell_length)
         else:
+
+            # 細胞を長軸ベースに細分化(Meta parameters)
+            split_num = 20
+            deltaL = cell_length / split_num
+
             fig = plt.figure(figsize=(6, 6))
             plt.scatter(u1, u2, s=5, color="lime")
             plt.scatter(u1_c, u2_c, color="red", s=100)
@@ -342,7 +347,51 @@ class Cell:
                 arc_length = Cell._calc_arc_length(theta, min(u1), i)
                 raw_points.append([arc_length, min_distance])
 
+            # 区間ΔLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
+            points_init = [
+                p
+                for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
+                if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL
+            ]
+
+            # 区間中のyの平均値を求める
+            y_mean = sum([i[1] for i in points_init]) / len(points_init)
+
+            # 円柱ポリゴンの定義
+            cylinders = []
+
+            # 幅を格納
+            widths = []
+
+            for i in range(0, split_num):
+                x_0 = min(u1_adj) + i * deltaL
+                x_1 = min(u1_adj) + (i + 1) * deltaL
+                points = [
+                    p
+                    for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
+                    if x_0 <= p[0] <= x_1
+                ]
+                if len(points) == 0:
+                    # 前の点を使う
+                    y_mean = y_mean
+                else:
+                    # 区間中のyの平均値を求める
+                    y_mean = sum([i[1] for i in points]) / len(points)
+                plt.scatter(((x_0) + (x_1)) / 2, y_mean, color="magenta", s=20)
+                plt.plot([x_0, x_0], [0, y_mean], color="lime")
+
+                volume += y_mean**2 * np.pi * deltaL
+
+                cylinders.append((x_0, deltaL, y_mean, "lime", 0.3))
+
+                widths.append(y_mean)
+
             fig_volume = plt.figure(figsize=(6, 6))
+            plt.scatter(
+                (min(u1_adj) + min(u1_adj + deltaL)) / 2, y_mean, color="magenta", s=20
+            )
+            plt.plot([min(u1_adj), min(u1_adj)], [0, y_mean], color="lime")
+
             plt.axis("equal")
             plt.scatter(
                 [i[0] for i in raw_points],
@@ -355,7 +404,17 @@ class Cell:
             plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
             plt.savefig("realtime_volume.png")
             plt.close(fig_volume)
-            return (0, 0, 0, 0)
+            Cell._plot_cylinders(
+                cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
+            )
+            # width はwidthsの大きい順から3つの平均値を取る。
+            # widthsの各値は、その区間のy座標の平均値である。
+            # この際、区間のy軸方向は細胞の片側の幅を表すため、値を単純に二倍する。
+            widths = sorted(widths, reverse=True)
+            widths = widths[:3]
+            width = sum(widths) / len(widths)
+            width *= 2
+            return (area, volume, width, cell_length)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
