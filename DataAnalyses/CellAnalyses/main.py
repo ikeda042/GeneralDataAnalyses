@@ -110,6 +110,7 @@ peak_path_analysis = False
 ##########################################################################################################################################################################
 
 # CellAnalysesを実行
+# dataset-spaceにPhenoPixelから出力したデータベースを格納している場合
 if __name__ == "__main__":
     db_paths = [
         f"DataAnalyses/CellAnalyses/dataset-space/{i}"
