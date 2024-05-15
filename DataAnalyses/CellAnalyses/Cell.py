@@ -15,6 +15,7 @@ from scipy.linalg import eig
 import os
 from dataclasses import dataclass
 import shutil
+from tqdm import tqdm
 
 
 @dataclass
@@ -271,7 +272,7 @@ class Cell:
 
         # 幅を格納
         widths = []
-        for i in range(0, split_num):
+        for i in tqdm(range(0, split_num)):
             x_0 = min(u1_adj) + i * deltaL
             x_1 = min(u1_adj) + (i + 1) * deltaL
             points = [
