@@ -350,8 +350,8 @@ class Cell:
             # 区間ΔLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
             points_init = [
                 p
-                for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-                if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL
+                for p in [[i, j] for i, j in raw_points]
+                if min(u1) <= p[0] <= min(u1) + deltaL
             ]
 
             # 区間中のyの平均値を求める
@@ -364,12 +364,10 @@ class Cell:
             widths = []
 
             for i in range(0, split_num):
-                x_0 = min(u1_adj) + i * deltaL
-                x_1 = min(u1_adj) + (i + 1) * deltaL
+                x_0 = min(u1) + i * deltaL
+                x_1 = min(u1) + (i + 1) * deltaL
                 points = [
-                    p
-                    for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-                    if x_0 <= p[0] <= x_1
+                    p for p in [[i, j] for i, j in raw_points] if x_0 <= p[0] <= x_1
                 ]
                 if len(points) == 0:
                     # 前の点を使う
