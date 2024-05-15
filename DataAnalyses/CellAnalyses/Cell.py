@@ -205,19 +205,19 @@ class Cell:
         u1_adj = u1 - u1_c
         u2_adj = u2 - u2_c
 
-        fig = plt.figure(figsize=(6, 6))
-        plt.scatter(u1, u2, s=5, color="lime")
-        plt.scatter(u1_c, u2_c, color="red", s=100)
-        plt.axis("equal")
-        margin_width = 10
-        margin_height = 10
-        plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
-        plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
-
         # 細胞を長軸ベースに細分化(Meta parameters)
         split_num = 20
 
         if polyfit_degree is None or polyfit_degree == 1:
+
+            fig = plt.figure(figsize=(6, 6))
+            plt.scatter(u1, u2, s=5, color="lime")
+            plt.scatter(u1_c, u2_c, color="red", s=100)
+            plt.axis("equal")
+            margin_width = 10
+            margin_height = 10
+            plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
+            plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
 
             x = np.linspace(min(u1_adj), max(u1_adj), 1000)
             theta = self._poly_fit(np.array([u1_adj, u2_adj]).T)
@@ -310,8 +310,17 @@ class Cell:
             width *= 2
             return (area, volume, width, cell_length)
         else:
-            x = np.linspace(min(u1_adj), max(u1_adj), 1000)
-            theta = self._poly_fit(np.array([u1_adj, u2_adj]).T, degree=polyfit_degree)
+            fig = plt.figure(figsize=(6, 6))
+            plt.scatter(u1, u2, s=5, color="lime")
+            plt.scatter(u1_c, u2_c, color="red", s=100)
+            plt.axis("equal")
+            margin_width = 10
+            margin_height = 10
+            plt.xlim([min(u1) - margin_width, max(u1) + margin_width])
+            plt.ylim([min(u2) - margin_height, max(u2) + margin_height])
+
+            x = np.linspace(min(u1), max(u1), 1000)
+            theta = self._poly_fit(np.array([u1, u2]).T, degree=polyfit_degree)
             y = np.polyval(theta, x)
             plt.plot(x, y, color="red")
             plt.xlabel("u1")
@@ -320,20 +329,19 @@ class Cell:
             plt.savefig("realtime_replot.png")
             plt.close(fig)
 
-            cell_length = Cell._calc_arc_length(theta, min(u1_adj), max(u1_adj))
+            cell_length = Cell._calc_arc_length(theta, min(u1), max(u1))
             area = cv2.contourArea(np.array(contour))
             volume = 0
-
-            fig_volume = plt.figure(figsize=(6, 6))
 
             raw_points: list[list[float]] = []
             for i, j in zip(u1, u2):
                 min_distance, min_point = Cell._find_minimum_distance_and_point(
                     theta, i, j
                 )
-                arc_length = Cell._calc_arc_length(theta, min(u1_adj), i)
+                arc_length = Cell._calc_arc_length(theta, min(u1), i)
                 raw_points.append([arc_length, min_distance])
 
+            fig_volume = plt.figure(figsize=(6, 6))
             plt.scatter(
                 [i[0] for i in raw_points],
                 [i[1] for i in raw_points],
@@ -343,6 +351,7 @@ class Cell:
             plt.xlabel("arc length")
             plt.ylabel("distance")
             plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
+            plt.savefig("realtime_volume.png")
             plt.close(fig_volume)
             return (0, 0, 0, 0)
 
