@@ -170,7 +170,7 @@ class Cell:
     def get_image_fluo(self) -> np.ndarray:
         return self.image_fluo
 
-    def replot_contour(self) -> np.ndarray:
+    def replot_contour(self, polyfit_degree: int | None) -> np.ndarray:
         contour = [list(i[0]) for i in pickle.loads(self.contour)]
 
         X = np.array(
@@ -204,109 +204,114 @@ class Cell:
         u1_adj = u1 - u1_c
         u2_adj = u2 - u2_c
 
-        # 描画
         fig = plt.figure(figsize=(6, 6))
-        plt.scatter(u1_adj, u2_adj, s=5, color="lime")
-        plt.scatter(0, 0, color="red", s=100)
+        plt.scatter(u1, u2, s=5, color="lime")
+        plt.scatter(u1_c, u2_c, color="red", s=100)
         plt.axis("equal")
-
         margin_width = 10
         margin_height = 10
         plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
         plt.ylim([min(u2_adj) - margin_height, max(u2_adj) + margin_height])
 
-        x = np.linspace(min(u1_adj), max(u1_adj), 1000)
-        theta = self._poly_fit(np.array([u1_adj, u2_adj]).T)
-        y = np.polyval(theta, x)
-        plt.plot(x, y, color="red")
-        plt.xlabel("u1")
-        plt.ylabel("u2")
-        plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
-        plt.savefig("realtime_replot.png")
-        plt.close(fig)
+        if polyfit_degree is None or polyfit_degree == 1:
 
-        # 細胞情報の初期化および定義
-        cell_length = max(u1_adj) - min(u1_adj)
-        area = cv2.contourArea(np.array(contour))
-        volume = 0
+            x = np.linspace(min(u1_adj), max(u1_adj), 1000)
+            theta = self._poly_fit(np.array([u1_adj, u2_adj]).T)
+            y = np.polyval(theta, x)
+            plt.plot(x, y, color="red")
+            plt.xlabel("u1")
+            plt.ylabel("u2")
+            plt.savefig(f"{self.dir_replot}/{self.cell_id}_replot.png")
+            plt.savefig("realtime_replot.png")
+            plt.close(fig)
 
-        # 細胞を長軸ベースに細分化
+            # 細胞情報の初期化および定義
+            cell_length = max(u1_adj) - min(u1_adj)
+            area = cv2.contourArea(np.array(contour))
+            volume = 0
 
-        split_num = 20
-        deltaL = cell_length / split_num
+            # 細胞を長軸ベースに細分化
 
-        # u_2をすべて正にする
-        fig_volume = plt.figure(figsize=(6, 6))
-        u_2_abs = [abs(i) for i in u2_adj]
+            split_num = 20
+            deltaL = cell_length / split_num
 
-        plt.scatter(u1_adj, u_2_abs, s=5, color="lime")
-        # plt.scatter(0, 0, color="red", s=100)
-        plt.axis("equal")
+            # u_2をすべて正にする
+            fig_volume = plt.figure(figsize=(6, 6))
+            u_2_abs = [abs(i) for i in u2_adj]
 
-        margin_width = 10
-        margin_height = 10
-        plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
-        plt.ylim([min(u_2_abs) - margin_height, max(u_2_abs) + margin_height])
-        y = np.polyval(theta, x)
+            plt.scatter(u1_adj, u_2_abs, s=5, color="lime")
+            # plt.scatter(0, 0, color="red", s=100)
+            plt.axis("equal")
 
-        # 区間ΔLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
-        points_init = [
-            p
-            for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-            if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL
-        ]
+            margin_width = 10
+            margin_height = 10
+            plt.xlim([min(u1_adj) - margin_width, max(u1_adj) + margin_width])
+            plt.ylim([min(u_2_abs) - margin_height, max(u_2_abs) + margin_height])
+            y = np.polyval(theta, x)
 
-        # 区間中のyの平均値を求める
-        y_mean = sum([i[1] for i in points_init]) / len(points_init)
-        plt.scatter(
-            (min(u1_adj) + min(u1_adj + deltaL)) / 2, y_mean, color="magenta", s=20
-        )
-        plt.plot([min(u1_adj), min(u1_adj)], [0, y_mean], color="lime")
-
-        # 円柱ポリゴンの定義
-        cylinders = []
-
-        # 幅を格納
-        widths = []
-        for i in range(0, split_num):
-            x_0 = min(u1_adj) + i * deltaL
-            x_1 = min(u1_adj) + (i + 1) * deltaL
-            points = [
+            # 区間ΔLごとに分割して、縦の線を引く。この時、縦の線のy座標はその線に最も近い点のy座標とする。
+            points_init = [
                 p
                 for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
-                if x_0 <= p[0] <= x_1
+                if min(u1_adj) <= p[0] <= min(u1_adj) + deltaL
             ]
-            if len(points) == 0:
-                # 前の点を使う
-                y_mean = y_mean
-            else:
-                # 区間中のyの平均値を求める
-                y_mean = sum([i[1] for i in points]) / len(points)
-            plt.scatter(((x_0) + (x_1)) / 2, y_mean, color="magenta", s=20)
-            plt.plot([x_0, x_0], [0, y_mean], color="lime")
 
-            volume += y_mean**2 * np.pi * deltaL
+            # 区間中のyの平均値を求める
+            y_mean = sum([i[1] for i in points_init]) / len(points_init)
+            plt.scatter(
+                (min(u1_adj) + min(u1_adj + deltaL)) / 2, y_mean, color="magenta", s=20
+            )
+            plt.plot([min(u1_adj), min(u1_adj)], [0, y_mean], color="lime")
 
-            cylinders.append((x_0, deltaL, y_mean, "lime", 0.3))
+            # 円柱ポリゴンの定義
+            cylinders = []
 
-            widths.append(y_mean)
+            # 幅を格納
+            widths = []
+            for i in range(0, split_num):
+                x_0 = min(u1_adj) + i * deltaL
+                x_1 = min(u1_adj) + (i + 1) * deltaL
+                points = [
+                    p
+                    for p in [[i, j] for i, j in zip(u1_adj, u_2_abs)]
+                    if x_0 <= p[0] <= x_1
+                ]
+                if len(points) == 0:
+                    # 前の点を使う
+                    y_mean = y_mean
+                else:
+                    # 区間中のyの平均値を求める
+                    y_mean = sum([i[1] for i in points]) / len(points)
+                plt.scatter(((x_0) + (x_1)) / 2, y_mean, color="magenta", s=20)
+                plt.plot([x_0, x_0], [0, y_mean], color="lime")
 
-        plt.xlabel("u1")
-        plt.ylabel("u2")
-        plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
-        plt.close(fig_volume)
-        Cell._plot_cylinders(
-            cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
-        )
+                volume += y_mean**2 * np.pi * deltaL
 
-        # width はwidthsの大きい順から3つの平均値を取る。
-        # widthsの各値は、その区間のy座標の平均値である。
-        # この際、区間のy軸方向は細胞の片側の幅を表すため、値を単純に二倍する。
-        widths = sorted(widths, reverse=True)
-        widths = widths[:3]
-        width = sum(widths) / len(widths)
-        width *= 2
-        return (area, volume, width, cell_length)
+                cylinders.append((x_0, deltaL, y_mean, "lime", 0.3))
+
+                widths.append(y_mean)
+
+            plt.xlabel("u1")
+            plt.ylabel("u2")
+            plt.savefig(f"{self.dir_volume}/{self.cell_id}_volume.png", dpi=300)
+            plt.close(fig_volume)
+            Cell._plot_cylinders(
+                cylinders, f"{self.dir_cylinders}/{self.cell_id}_cylinders.png"
+            )
+
+            # width はwidthsの大きい順から3つの平均値を取る。
+            # widthsの各値は、その区間のy座標の平均値である。
+            # この際、区間のy軸方向は細胞の片側の幅を表すため、値を単純に二倍する。
+            widths = sorted(widths, reverse=True)
+            widths = widths[:3]
+            width = sum(widths) / len(widths)
+            width *= 2
+            return (area, volume, width, cell_length)
+        else:
+            x = np.linspace(min(u1_adj), max(u1_adj), 1000)
+            theta = self._poly_fit(np.array([u1_adj, u2_adj]).T, degree=polyfit_degree)
+            y = np.polyval(theta, x)
+            return (0, 0, 0, 0)
 
     def replot(self, calc_path: bool, degree: int, dir: str = "images") -> np.ndarray:
         mask = np.zeros_like(self.image_fluo_gray)
