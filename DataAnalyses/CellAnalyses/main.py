@@ -122,3 +122,4 @@ if __name__ == "__main__":
         extract_1(db_path)
     for d in [i.split(".")[0] + "_1.db" for i in db_paths]:
         analyze_cells(f"{d}", morphology_analysis, peak_path_analysis, only_ph)
+        os.remove(d)
