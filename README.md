@@ -188,7 +188,7 @@ $$\frac{dX}{dt}=\mu X$$
 
 thus
 
-$$\ln \frac{X}{X_0}=\mu t$$
+$$\ln \frac{X}{X_0}=\mu \Delta t$$
 
 where 
 
